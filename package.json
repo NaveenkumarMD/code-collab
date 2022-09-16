@@ -1,0 +1,9 @@
+{
+    "name": "project",
+    "version": "1.0",
+    "scripts": {
+        "run-backend":"cd Backend && npm start",
+        "run-frontend":"cd '../frontend' && npm start",
+        "start": "run-backend && run-frontend"
+    }
+}
