@@ -1,0 +1,11 @@
+.editorcontainer{
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+}
+.middle-cursorcontainer{
+    width: 14px;
+    background-color: rebeccapurple;
+    cursor: col-resize;
+    z-index: 99;
+}
