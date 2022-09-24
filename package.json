@@ -8,6 +8,7 @@
     },
     "dependencies": {
         "concurrently": "^7.4.0",
+        "react-icons": "^4.4.0",
         "yarn": "^1.22.19"
     }
 }

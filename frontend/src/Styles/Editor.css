@@ -1,11 +1,28 @@
-.editorcontainer{
+.editor-container{
     display: flex;
     flex-direction: row;
-    width: 400px;
+    min-height: 100vh;
+    background-color: #1C1D1D;
+
 }
-.middle-cursorcontainer{
-    width: 14px;
-    background-color: rebeccapurple;
+.left-container-editor{
+    min-width: 30%;
+    width:80%;
+}
+.middle-bar-editor{
+    background-color: rgb(53, 54, 60);
     cursor: col-resize;
-    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.right-container-editor{
+    width: 100%;
+    min-width: 300px;
+}
+.accessory-btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 20px;
 }
