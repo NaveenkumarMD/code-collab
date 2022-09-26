@@ -10,8 +10,10 @@ body {
   --color-fg: #35B37B;
   --color-bg-secondary: #2F2F2E;
   --color-bg: #1C1C1C;
+  --color-gray1:#1C1C1D;
   --color-fg-secondary: #7e7e7e;
-  --color-primary: white
+  --color-primary: white;
+  --color-gray:#252424;
 }
 button{
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;;

@@ -7,12 +7,13 @@ import { RiArrowDropDownLine } from 'react-icons/ri'
 import { HiDotsVertical } from "react-icons/hi"
 import { IoMdMoon, IoMdSunny } from 'react-icons/io'
 import { SiC, SiCachet, SiCplusplus, SiJava, SiJavascript, SiPython } from 'react-icons/si'
+import EditorTabs from './EditorTabs';
 const defaultEditorConfig = {
     theme: "vs-light",
     value: "//Type something",
     fontSize: "20px",
     language: "Python",
-    height: "70vh",
+    height: "60vh",
     width: "400px"
 }
 
@@ -80,19 +81,19 @@ function Editorcomponent() {
                         </button>
                         <div class="dropdown-content">
                             <a onClick={() => setLanguage("python")}>
-                                <SiPython size={20} />
+                                <SiPython size={16} />
                                 Python</a>
                             <a onClick={() => setLanguage("java")}>
-                                <SiJava size={20} />
+                                <SiJava size={16} />
                                 Java</a>
                             <a onClick={() => setLanguage("c")}>
-                                <SiC size={20} />
+                                <SiC size={16} />
                                 C</a>
                             <a onClick={() => setLanguage("cpp")}>
-                                <SiCplusplus size={20} />
+                                <SiCplusplus size={16} />
                                 C++</a>
                             <a onClick={() => setLanguage("javascript")}>
-                                <SiJavascript size={20} />
+                                <SiJavascript size={16} />
                                 Javascript</a>
                         </div>
                     </div>
@@ -105,10 +106,10 @@ function Editorcomponent() {
                         </button>
                         <div class="dropdown-content">
                             <a onClick={() => setTheme("vs-light")}>
-                                <IoMdSunny size={20} />
+                                <IoMdSunny size={16} />
                                 Light</a>
                             <a onClick={() => setTheme("vs-dark")}>
-                                <IoMdMoon size={20} />
+                                <IoMdMoon size={16} />
                                 Dark</a>
                         </div>
                     </div>
@@ -141,7 +142,7 @@ function Editorcomponent() {
                     }}
                 />
                 <div>
-                    Naveenkumar
+                    <EditorTabs/>
                 </div>
             </div>
         </div >
