@@ -75,7 +75,9 @@ function Editorcomponent() {
                     <div class="dropdown">
                         <button class="dropbtn">
                             <div>
-                                Language
+                              {
+                                language.charAt(0).toUpperCase()+language.substring(1,language.length)
+                              }  
                             </div>
                             <RiArrowDropDownLine size={30} color="white" />
                         </button>
