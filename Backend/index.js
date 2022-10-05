@@ -2,7 +2,8 @@ const express = require("express")
 const cors = require("cors")
 const sharedb = require("sharedb")
 const WebSocketJSONStream=require("./Modules/Websocketjsonstream")
-
+const http=require("http")
+const Websocket=require("ws")
 const app = express()
 
 
@@ -31,9 +32,6 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  //sharedb
-  var stream=new WebSocketJSONStream(socket)
-  sharedbbackend.listen(stream)
 
   socket.emit("me", socket.id);
   socket.on("disconnect", () => {
@@ -55,3 +53,18 @@ io.on("connection", (socket) => {
 // Share db socket
 
 var sharedbbackend=new sharedb()
+
+var sharedbserver=http.createServer(app)
+
+var websocketserver=new Websocket.Server({server:sharedbserver})
+
+websocketserver.on("connection",(websocket)=>{
+  var stream=new WebSocketJSONStream(websocket)
+  sharedbbackend.listen(stream)
+})
+
+sharedbserver.listen(5001,()=>{
+  console.log("Sharedb server is listening at 5001")
+})
+
+
