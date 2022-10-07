@@ -5,12 +5,15 @@ const responseGoogle = (response) => {
   console.log(response);
 };
 
-const initClient = async () => {
-  await gapi.client.init({
+const initClient = () => {
+  gapi.client.init({
     clientId: process.env.REACT_APP_CLIENT_ID,
     scope: "",
   });
 };
-gapi.load("client:auth2", initClient);
 
-export { initClient, responseGoogle };
+const gapiStarter = () => {
+  gapi.load("client:auth2", initClient);
+};
+
+export { gapiStarter, responseGoogle };

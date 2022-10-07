@@ -1,14 +1,14 @@
 {
-    "name": "project",
-    "version": "1.0",
-    "scripts": {
-        "run-backend": "cd Backend && npm start",
-        "run-frontend": "cd frontend && npm start",
-        "start": "concurrently -n backend frontend 'npm:Backend' 'npm:Frontend' "
-    },
-    "dependencies": {
-        "concurrently": "^7.4.0",
-        "react-icons": "^4.4.0",
-        "yarn": "^1.22.19"
-    }
+  "name": "project",
+  "version": "1.0",
+  "scripts": {
+    "run-backend": "cd Backend && npm start",
+    "run-frontend": "cd frontend && npm start",
+    "start": "concurrently -n backend frontend 'npm:run-backend' 'npm:run-frontend' "
+  },
+  "dependencies": {
+    "concurrently": "^7.4.0",
+    "react-icons": "^4.4.0",
+    "yarn": "^1.22.19"
+  }
 }

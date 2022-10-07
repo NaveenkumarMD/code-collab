@@ -3,13 +3,13 @@ import "../Styles/Login.css";
 import Loginimage from "../Assets/login.svg";
 import { FcGoogle } from "react-icons/fc";
 import { useEffect } from "react";
-import { initClient, responseGoogle } from "../Functions/googleLogin";
+import { gapiStarter, responseGoogle } from "../Functions/googleLogin";
 
 import { GoogleLogin } from "react-google-login";
 
 function Login() {
   useEffect(() => {
-    initClient();
+    gapiStarter();
   });
 
   return (
