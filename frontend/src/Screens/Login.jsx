@@ -40,13 +40,13 @@ function Login() {
             <div className="btn-login">Login</div>
             <GoogleLogin
               buttonText="Continue with google"
+              className="btn-google"
               clientId={process.env.REACT_APP_CLIENT_ID}
               cookiePolicy={"single_host_origin"}
               isSignedIn={true}
               //todo: implement handle succes and error for g-login
               onSuccess={responseGoogle}
               onFailure={responseGoogle}
-              style={{ width: "100%" }}
             />
             <div className="signup-text">
               Don't have an account?<span>Sign up</span>
