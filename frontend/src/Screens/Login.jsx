@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../Styles/Login.css";
 import Loginimage from "../Assets/login.svg";
 import { FcGoogle } from "react-icons/fc";
 import { useEffect } from "react";
 import { gapiStarter, responseGoogle } from "../Functions/googleLogin";
+import { toastGenerator } from "../Functions/toast";
+import UserContext from "../Context/UserContext";
 
 import { GoogleLogin } from "react-google-login";
-
 function Login() {
+  const { userData, updateUserData } = useContext(UserContext);
+
+  const handleLogin = () => {
+    toastGenerator("info", "Logging you in, please wait!");
+    //todo: handle email login and signup
+    console.log("logging in");
+    updateUserData({ userName: "hello", email: "test" });
+    console.log(userData);
+  };
+
   useEffect(() => {
     gapiStarter();
   });
@@ -37,7 +48,9 @@ function Login() {
               </div>
             </div>
             <div className="forgot-pass">Forgot password?</div>
-            <div className="btn-login">Login</div>
+            <div className="btn-login" onClick={handleLogin}>
+              Login
+            </div>
             <GoogleLogin
               buttonText="Continue with google"
               className="btn-google"
