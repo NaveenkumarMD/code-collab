@@ -8,6 +8,7 @@ import { HiDotsVertical } from "react-icons/hi"
 import { IoMdMoon, IoMdSunny } from 'react-icons/io'
 import { SiC, SiCachet, SiCplusplus, SiJava, SiJavascript, SiPython } from 'react-icons/si'
 import EditorTabs from './EditorTabs';
+import Collabcode from './Collabcode';
 const defaultEditorConfig = {
     theme: "vs-light",
     value: "//Type something",
@@ -28,6 +29,7 @@ function Editorcomponent() {
     const [width, setWidth] = useState(0)
     const containerref = useRef(null)
     const [language, setLanguage] = useState("python")
+    const [code,setCode]=useState("")
     useEffect(() => {
         var drag = false
         var leftwidth = leftcontainerref.current.getBoundingClientRect().width
@@ -57,14 +59,16 @@ function Editorcomponent() {
 
 
     }, [])
-    useEffect(() => {
+    const handleediorchange=(newValue,e)=>{
+        setCode(newValue)
 
-    }, [])
+    }
     return (
         <div className='editor-container' ref={containerref} >
             <div className='left-container-editor' ref={leftcontainerref}>
                 <div>
                     this{width}
+                    <Collabcode  code={code} setCode={setCode}/>
                 </div>
             </div>
             <div className='middle-bar-editor' ref={middelbarref}>
@@ -135,13 +139,16 @@ function Editorcomponent() {
                 </div>
                 <Editor
                     height={config.height}
-                    defaultValue={config.value}
+                    defaultValue={code}
                     theme={theme}
                     language={language}
                     options={{
                         scrollBeyondLastLine: false,
                         fontSize: fontSize
                     }}
+                    onChange={handleediorchange}
+                    value={code}
+                    
                 />
                 <div>
                     <EditorTabs/>
