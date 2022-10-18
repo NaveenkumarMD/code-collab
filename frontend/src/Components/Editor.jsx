@@ -67,7 +67,7 @@ function Editorcomponent() {
         <div className='editor-container' ref={containerref} >
             <div className='left-container-editor' ref={leftcontainerref}>
                 <div>
-                    this{width}
+                    
                     <Collabcode  code={code} setCode={setCode}/>
                 </div>
             </div>
