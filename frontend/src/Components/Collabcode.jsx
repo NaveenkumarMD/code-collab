@@ -22,7 +22,7 @@ function Collabcode({ code, setCode }) {
             console.log('count', doc)
             setCode(doc.data.code)
             console.log("doc iurrrrs", doc.data)
-            
+
         })
         console.log(connection)
     }, [connection])
@@ -30,7 +30,7 @@ function Collabcode({ code, setCode }) {
         const op = [{
             p: ['code'], oi: code
         }]
-        console.log("doc",doc)
+        console.log("doc", doc)
         if (doc.data) {
             doc.submitOp(op)
         }
@@ -38,11 +38,6 @@ function Collabcode({ code, setCode }) {
     }, [code])
     return (
         <>
-            {/* <button onClick={() => {
-            }}>Click</button> */}
-            {/* <div style={{ fontSize: "30px", color: "red" }}>count is{code}</div> */}
-
-<div style={{margin:"30px"}}>Problem statement</div>
         </>
     )
 }

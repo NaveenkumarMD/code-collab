@@ -1,14 +1,31 @@
 .editor-container{
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
+    height: 100vh;
     background-color: #1C1D1D;
 
+}
+.editor-container::-webkit-scrollbar{
+    width: 0px;
+    background:transparent;
+}
+.main-container::-webkit-scrollbar{
+    width: 0px;
+    background: transparent;
+
+}
+.main-container{
+    background-color: blueviolet;
 }
 .left-container-editor{
     min-width: 30%;
     width:80%;
+    overflow-y: scroll;
     
+}
+.left-container-editor::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
 .middle-bar-editor{
     background-color: rgb(53, 54, 60);

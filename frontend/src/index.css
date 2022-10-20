@@ -13,8 +13,12 @@ body {
   --color-gray1:#1C1C1D;
   --color-fg-secondary: #7e7e7e;
   --color-primary: white;
-  --color-gray:#252424;
+  --color-gray:rgb(36, 37, 41);
 }
 button{
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;;
+}
+body::-webkit-scrollbar{
+  width: 0px;
+  background: transparent;
 }

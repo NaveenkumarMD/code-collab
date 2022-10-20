@@ -1,0 +1,107 @@
+.left-container-tabs{
+    display: flex;
+    flex-direction: row;
+    justify-content:start;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid rgb(44, 42, 42);
+    padding-left: 30px;
+
+}
+.left-container-tabs>div{
+    padding: 20px;
+    cursor: pointer;
+    font-weight: 500;
+
+}
+.left-container-tabs>div.selected{
+    color:var(--color-fg);
+    border-bottom: 3px solid var(--color-fg);
+}
+.main-container-question{
+    padding: 35px 25px;
+
+}
+.main-title{
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.tags{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.tag{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 100;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: rgb(53, 54, 60);
+    color: white;
+    
+}
+.main-description{
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    line-height: 24px;
+    word-spacing: 4px;
+    letter-spacing: 0.3px;
+}
+.sub-container{
+    margin: 20px 0px;
+}
+.sub-title{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 40px;
+    margin-bottom: 10px;
+    color: var(--color-fg);
+}
+.sub-content{
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    line-height: 24px;
+    word-spacing: 4px;
+    letter-spacing: 0.3px;
+}
+.green{
+    color: var(--color-fg);
+    padding: 5px 0px;
+    border-bottom: 3px solid  rgb(53, 54, 60);
+    margin-top: 40px;
+}
+.code-container{
+    background-color:rgb(53, 54, 60);
+    padding: 10px;
+    border-radius: 4px;
+}
+.constraints{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.constraint{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 100;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: rgb(53, 54, 60);
+    color: white;
+}
