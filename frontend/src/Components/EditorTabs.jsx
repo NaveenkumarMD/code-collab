@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import '../Styles/Editortabs.css'
-function EditorTabs() {
+function EditorTabs(props) {
     const tab1ref = useRef(null)
     const tab2ref = useRef(null)
     const tab3ref = useRef(null)
@@ -15,6 +15,7 @@ function EditorTabs() {
         tab2ref.current.classList.remove("tab-selected")
         tab3ref.current.classList.remove("tab-selected")
     }
+    
     const handletabclick = (e) => {
         var tabid = e.target.getAttribute("name")
         cleanstyles()
@@ -39,9 +40,14 @@ function EditorTabs() {
     return (
         <div className='editor-tabs'>
             <div className='tabs-header'>
-                <div className='tab-selected' ref={tab1ref} name="tab1" onClick={handletabclick}>Test cases</div>
-                <div className="" ref={tab2ref} name="tab2" onClick={handletabclick}>Results</div>
-                <div className=""ref={tab3ref} name="tab3" onClick={handletabclick}>Terminal</div>
+                <div className='tabs-sub-header1'>
+                    <div className='tab-selected' ref={tab1ref} name="tab1" onClick={handletabclick}>Test cases</div>
+                    <div className="" ref={tab2ref} name="tab2" onClick={handletabclick}>Results</div>
+                    <div className="" ref={tab3ref} name="tab3" onClick={handletabclick}>Terminal</div>
+                </div>
+                <div>
+                    <button className='btn-run' onClick={props.runCode}>Run</button>
+                </div>
             </div>
             <div className='tabs-content content-selected' ref={tab1contentref} >
                 content1

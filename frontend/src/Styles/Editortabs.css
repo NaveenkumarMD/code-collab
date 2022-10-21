@@ -1,18 +1,25 @@
 .tabs-header{
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 0px;
     background-color:var(--color-gray);
+    padding-right: 30px;
 }
-.tabs-header>div{
+.tabs-sub-header1>div{
     padding: 0px;
     cursor: pointer;
-    padding: 20px 30px;
+    padding: 20px 20px;
     font-weight: 500;
     background-color: var(--color-gray) !important;
 }
-.tabs-header>.tab-selected{
+.tabs-sub-header1>.tab-selected{
     background-color: var(--color-gray1) !important;
     color: var(--color-fg) !important;
+}
+.tabs-sub-header1{
+    display: flex;
+    gap: 0px;
 }
 
 .tabs-content{
@@ -21,4 +28,15 @@
 }
 .content-selected{
     display: block !important;
+}
+.btn-run{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    padding: 10px 30px;
+    background-color: var(--color-fg);
+    cursor: pointer;
+    color: white;
 }

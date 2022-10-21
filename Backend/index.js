@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5000
 //Routes
 //------------------------------------------------------
 app.use(require("./Src/Routes/index"))
-
+app.use(require("./Src/Routes/Runcode"))
 
 const server = app.listen(PORT, () => {
   console.log("App is running at", PORT)

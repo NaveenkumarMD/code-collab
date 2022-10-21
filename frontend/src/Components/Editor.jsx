@@ -32,6 +32,7 @@ function Editorcomponent() {
     const [language, setLanguage] = useState("python")
     const [code, setCode] = useState("")
     const [navbarHeight, setNavbarHeight] = useState(0)
+    const [input,setInput]=useState("")
     let EditorOptionprops = {
         language,
         setLanguage,
@@ -40,9 +41,21 @@ function Editorcomponent() {
         fontSize,
         setFontsize
     }
-    let Navbarprops={
-        height:navbarHeight
+    let Navbarprops = {
+        height: navbarHeight
     }
+    const runCode = () => {
+        const dataToRunCode={
+            language,
+            code,
+            input
+        }
+        fetch(".//")
+    }
+    let editorTabsprops = {
+        runCode
+    }
+
     useEffect(() => {
         var drag = false
         var leftwidth = leftcontainerref.current.getBoundingClientRect().width
@@ -84,11 +97,10 @@ function Editorcomponent() {
     }, [])
     const handlemousemoveonscreen = (e) => {
         let y = e.screenY
-        console.log(y)
         if (y < 150) {
             setNavbarHeight(50)
         }
-        if (y>300){
+        if (y > 300) {
             setNavbarHeight(0)
         }
     }
@@ -99,12 +111,12 @@ function Editorcomponent() {
         <div ref={maincontainerref} className="main-container" >
             <Navbar {...Navbarprops} />
 
-            <div className='editor-container' style={{height:`calc(100vh-${navbarHeight}px)`}} ref={containerref} >
+            <div className='editor-container' style={{ height: `calc(100vh-${navbarHeight}px)` }} ref={containerref} >
                 <div className='left-container-editor' ref={leftcontainerref}>
                     <div>
                         <Collabcode code={code} setCode={setCode} />
                     </div>
-                    <Leftcontainer/>
+                    <Leftcontainer />
                 </div>
                 <div className='middle-bar-editor' ref={middelbarref}>
                     <HiDotsVertical size={20} color="white" />
@@ -125,7 +137,7 @@ function Editorcomponent() {
 
                     />
                     <div>
-                        <EditorTabs />
+                        <EditorTabs {...editorTabsprops} />
                     </div>
                 </div>
             </div >
