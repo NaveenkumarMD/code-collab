@@ -8,17 +8,19 @@ router.post("/runcode", (req, res) => {
         language,
         input
     } = req.body
-    if (!code || !language || !input){
+    if (!code || !language) {
         return res.json({
-            err:"Provide all the fields"
+            err:"Provide the language and code"
         })
     }
-    console.log(code)
-    runcode(code,language,input).then((msg)=>{
-        console.log(msg)
+    console.log("runcode function is called..")
+    runcode(code, language, input).then(result => {
+        res.json(result)
+    }).catch(function (err) {
+        res.json({
+            "err": err
+        })
     })
-
-
 
 })
 

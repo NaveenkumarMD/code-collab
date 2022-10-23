@@ -46,7 +46,7 @@ function EditorTabs(props) {
                     <div className="" ref={tab3ref} name="tab3" onClick={handletabclick}>Terminal</div>
                 </div>
                 <div>
-                    <button className='btn-run' onClick={props.runCode}>Run</button>
+                    <div className='btn-run' onClick={props.runCode}>Run</div>
                 </div>
             </div>
             <div className='tabs-content content-selected' ref={tab1contentref} >

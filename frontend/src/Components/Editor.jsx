@@ -32,7 +32,7 @@ function Editorcomponent() {
     const [language, setLanguage] = useState("python")
     const [code, setCode] = useState("")
     const [navbarHeight, setNavbarHeight] = useState(0)
-    const [input,setInput]=useState("")
+    const [input, setInput] = useState("")
     let EditorOptionprops = {
         language,
         setLanguage,
@@ -45,12 +45,23 @@ function Editorcomponent() {
         height: navbarHeight
     }
     const runCode = () => {
-        const dataToRunCode={
+        const dataToRunCode = {
             language,
             code,
             input
         }
-        fetch(".//")
+        fetch("/runcode",{
+            method:"POST",
+            headers:{
+                "content-type":"application/json"
+            },
+            body:JSON.stringify(dataToRunCode)
+
+        }).then(res=>res.json()).then(data=>{
+            console.log(data)
+        }).catch(err=>{
+            console.log(err)
+        })
     }
     let editorTabsprops = {
         runCode
