@@ -34,9 +34,15 @@
     flex-direction: column;
     justify-content: center;
 }
+.right-container-editor ::-webkit-scrollbar{
+    width: 0px;
+    background:transparent;
+}
 .right-container-editor{
     width: 100%;
     min-width: 300px;
+    height: 100vh;
+    overflow-y: scroll;
 }
 .accessory-btns{
     display: flex;

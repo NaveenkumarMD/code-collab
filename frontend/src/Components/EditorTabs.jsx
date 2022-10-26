@@ -1,5 +1,6 @@
-import React, { useRef } from 'react'
+import React, { useRef,useState,useEffect } from 'react'
 import '../Styles/Editortabs.css'
+import Terminal, { ColorMode, TerminalOutput } from 'react-terminal-ui'
 function EditorTabs(props) {
     const tab1ref = useRef(null)
     const tab2ref = useRef(null)
@@ -7,6 +8,14 @@ function EditorTabs(props) {
     const tab1contentref = useRef(null)
     const tab2contentref = useRef(null)
     const tab3contentref = useRef(null)
+    const [terminalLineData, setTerminalLineData] = useState([
+        <TerminalOutput>{props.TerminalOutput}</TerminalOutput>
+    ]);
+    useEffect(() => {
+        setTerminalLineData([
+            <TerminalOutput>{props.TerminalOutput}</TerminalOutput>
+        ])
+    }, [props.TerminalOutput]);
     const cleanstyles = () => {
         tab1contentref.current.classList.remove("content-selected")
         tab2contentref.current.classList.remove("content-selected")
@@ -15,7 +24,7 @@ function EditorTabs(props) {
         tab2ref.current.classList.remove("tab-selected")
         tab3ref.current.classList.remove("tab-selected")
     }
-    
+
     const handletabclick = (e) => {
         var tabid = e.target.getAttribute("name")
         cleanstyles()
@@ -55,8 +64,10 @@ function EditorTabs(props) {
             <div className='tabs-content' ref={tab2contentref}>
                 content2
             </div>
-            <div className='tabs-content' ref={tab3contentref}>
-                content3
+            <div className='tabs-content tab-2' ref={tab3contentref}>
+                <Terminal  prompt=' '  colorMode={ColorMode.Dark} onInput={terminalInput => console.log(`New terminal input received: '${terminalInput}'`)}>
+                    {terminalLineData}
+                </Terminal>
             </div>
         </div>
     )

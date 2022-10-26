@@ -1,14 +1,46 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import '../Styles/Leftcontainer.css'
 function Leftcontainer() {
+    const questioncontainerRef = useRef(null)
+    const connectcontainerref=useRef(null)
+    const tab1ref=useRef(null)
+    const tab2ref=useRef(null)
+
+    const cleanStyles=()=>{
+        questioncontainerRef.current.classList.remove("current-show")
+        connectcontainerref.current.classList.remove("current-show")
+        tab1ref.current.classList.remove("selected")
+        tab2ref.current.classList.remove("selected")
+
+    }
+    const handletabclick = (e) => {
+        const tabSelected = e.target.getAttribute("name")
+        cleanStyles()
+        switch (tabSelected) {
+            case "problem":
+                questioncontainerRef.current.classList.add("current-show")
+                tab1ref.current.classList.add("selected")
+                break;
+            case "connect":
+                connectcontainerref.current.classList.add("current-show")
+                tab2ref.current.classList.add("selected")
+                break;
+
+            default:
+                break;
+        }
+    }
     return (
         <div>
             <div className='left-container-tabs'>
-                <div className='selected'>Problem</div>
-                <div>Submissions</div>
-                <div>Solution</div>
+                <div className='selected' onClick={handletabclick} name="problem" ref={tab1ref}>Problem</div>
+                <div className='' onClick={handletabclick} name="connect" ref={tab2ref}>Connect</div>
+
             </div>
-            <div className='main-container-question'>
+            <div className='connect-container' ref={connectcontainerref}>
+                conect container
+            </div>
+            <div className='main-container-question current-show' ref={questioncontainerRef}>
                 <div className='main-title'>
                     My First Code
                 </div>

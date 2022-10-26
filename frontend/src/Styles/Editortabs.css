@@ -26,6 +26,11 @@
     display: none;
     margin: 10px;
 }
+.tab-2{
+    max-height: 300px;
+    overflow: hidden;
+    border-radius: 6px;
+}
 .content-selected{
     display: block !important;
 }

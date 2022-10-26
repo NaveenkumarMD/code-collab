@@ -33,6 +33,7 @@ function Editorcomponent() {
     const [code, setCode] = useState("")
     const [navbarHeight, setNavbarHeight] = useState(0)
     const [input, setInput] = useState("")
+    const [TerminalOutput, setTerminaloutput] = useState("Output")
     let EditorOptionprops = {
         language,
         setLanguage,
@@ -50,21 +51,27 @@ function Editorcomponent() {
             code,
             input
         }
-        fetch("/runcode",{
-            method:"POST",
-            headers:{
-                "content-type":"application/json"
+        fetch("/runcode", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
             },
-            body:JSON.stringify(dataToRunCode)
+            body: JSON.stringify(dataToRunCode)
 
-        }).then(res=>res.json()).then(data=>{
-            console.log(data)
-        }).catch(err=>{
+        }).then(res => res.json()).then(data => {
+            if (data.output) {
+                setTerminaloutput(data.output)
+            }
+            if (data.error) {
+                setTerminaloutput(data.error)
+            }
+        }).catch(err => {
             console.log(err)
         })
     }
     let editorTabsprops = {
-        runCode
+        runCode,
+        TerminalOutput
     }
 
     useEffect(() => {

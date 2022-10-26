@@ -19,6 +19,10 @@ button{
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;;
 }
 body::-webkit-scrollbar{
+  width: 0px !important;
+  background: transparent !important;
+}
+::-webkit-scrollbar{
   width: 0px;
-  background: transparent;
+  background: transparent !important;
 }
