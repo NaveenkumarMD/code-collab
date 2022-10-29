@@ -60,7 +60,9 @@ function Leftcontainer() {
                 <div className='sub-container'>
                     <div className='sub-title'>Output Format</div>
                     <div className='sub-content'>
-                        The amount you need to pay to the milkman in rupees, accurate upto exactly 2 decimal places.
+                    The first line contains 'T' denoting the no. of test cases.
+
+T lines each contain a number 'n' denoting the number of elements, followed by n space-separated numbers denoting the array elements.
                     </div>
                 </div>
                 <div className='main-title green'>
