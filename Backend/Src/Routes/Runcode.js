@@ -24,4 +24,19 @@ router.post("/runcode", (req, res) => {
 
 })
 
+router.post("/runAllTestCases",(req,res)=>{
+    const {
+        code,
+        language,
+        testcases
+    } = req.body
+    if (!code || !language) {
+        return res.json({
+            err:"Provide the language and code"
+        })
+    }
+    console.log("runcode function is called..")
+
+})
+
 module.exports = router

@@ -1,0 +1,147 @@
+.aqcontainer {
+    background-color: var(--color-bg);
+    min-height: 100vh;
+    width: 100%;
+}
+
+.aqheader {
+    font-size: 28px;
+}
+
+.qcontainer {
+    max-width: 60%;
+    margin: 0px auto;
+    padding-top: 80px;
+    /* border: 2px solid var(--color-fg); */
+
+}
+
+.input-search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #252A33;
+    padding: 10px;
+    width: 100%;
+    border-radius: 4px;
+    margin: 10px;
+}
+.input-search>input{
+    background-color: #252A33;
+    border: none;
+    outline:none;
+    width: 100%;
+    font-size: 16px;
+    color: white;
+}
+
+.search-bar {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0px;
+}
+
+.tag-select {
+    padding: 10px;
+    margin: 0px;
+}
+
+
+
+.xdropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    display: flex;
+    gap: 10px;
+    border-radius: 4px;
+}
+
+
+.xdropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+.xdropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--color-gray);
+    min-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.xdropdown-content div {
+    color: white;
+    padding: 10px 10px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.xdropdown-content div:hover {
+    background-color: var(--color-fg);
+}
+
+
+.xdropdown:hover .xdropdown-content {
+    display: block;
+}
+.result-identifier-text{
+    color: #687575;
+    font-size: 14px;
+}
+table, th, td {
+
+    border-collapse: collapse;
+  }
+  th {
+    padding-top: 30px;
+  }
+  td{
+    padding: 90px;
+    border-collapse: separate;
+    border-spacing: 20px;
+  }
+table{
+    width: 100%;
+    margin: 20px 0px;
+}
+.table-sno{
+    width: 5%;
+    padding-left: 0px;
+    font-weight: 100;
+    text-align: center !important;
+
+}
+.title-table{
+    border-bottom: 9px solid #1C1C1C;
+}
+th{
+    text-align: left;
+    font-weight: 100;
+    font-size: 14px;
+    color: rgb(179, 174, 174);
+}
+.question-container-bar{
+    background-color: #252A33;
+    padding: 10px !important;
+    cursor: pointer;
+    margin-top: 10px;
+    border-bottom: 2px solid red !important;
+}
+.question-container-bar>td{
+    padding: 20px 5px !important;
+    border-bottom: 3px solid #1C1C1C;
+    border-collapse: separate;
+ 
+}

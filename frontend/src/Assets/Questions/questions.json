@@ -2,20 +2,60 @@
     "questions": [
         {
             "id": 1,
-            "title": "",
-            "tags": [],
-            "description": "",
-            "input_format": "",
-            "output_format": "",
-            "sample_input": [
-                "3",
-                "4 1 2 3 4",
-                "5 1 1 1 1 1",
-                "5 1 3 5 7 9"
+            "title": "My First Code",
+            "tags": [
+                "Easy",
+                "Array"
             ],
-            "sample_output": [],
-            "constraints": []
+            "difficulty": "Easy",
+            "score": 100,
+            "description": "Your mother has sent you to the milkman with a cylindrical bottle. You have to pay the milkman the price for the bottle full of milk at a rate of ₹40 per litre of milk. You are given the radius (r) and the height (h) of the bottle in centimetres. You can assume the value of π as 3.14.",
+            "input_format": " 1 line containing two space separated integers - the radius and the height of the bottle (in centimetres).",
+            "output_format": "The first line contains 'T' denoting the no. of test cases.\nT lines each contain a number 'n' denoting the number of elements, followed by n space-separated numbers denoting the array elements.",
+            "sample_input": [
+                "2 34"
+            ],
+            "sample_output": [
+                "75.36"
+            ],
+            "constraints": [
+                "1 ≤ r ≤ 100",
+                "1 ≤ r ≤ 100"
+            ],
+            "test_case": [
+                {
+                    "input": [
+                        "2 34"
+                    ],
+                    "output": [
+                        "75.36"
+                    ]
+                }
+
+            ]
         },
-        
+        {
+            "id": 2,
+            "title": "My First Code",
+            "tags": [
+                "Hard",
+                "Array"
+            ],
+            "difficulty": "Hard",
+            "score": 100,
+            "description": "Your mother has sent you to the milkman with a cylindrical bottle. You have to pay the milkman the price for the bottle full of milk at a rate of ₹40 per litre of milk. You are given the radius (r) and the height (h) of the bottle in centimetres. You can assume the value of π as 3.14.",
+            "input_format": " 1 line containing two space separated integers - the radius and the height of the bottle (in centimetres).",
+            "output_format": "The first line contains 'T' denoting the no. of test cases.\nT lines each contain a number 'n' denoting the number of elements, followed by n space-separated numbers denoting the array elements.",
+            "sample_input": [
+                "2 34"
+            ],
+            "sample_output": [
+                "75.36"
+            ],
+            "constraints": [
+                "1 ≤ r ≤ 100",
+                "1 ≤ r ≤ 100"
+            ]
+        }
     ]
 }

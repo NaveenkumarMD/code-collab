@@ -20,6 +20,7 @@
 }
 .main-container-question{
     padding: 35px 25px;
+    display: none;
 
 }
 .connect-container{

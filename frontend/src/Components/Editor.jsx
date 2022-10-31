@@ -9,6 +9,7 @@ import Collabcode from './Collabcode';
 import EditorOptions from './EditorOptions';
 import Navbar from './Navbar';
 import Leftcontainer from './Leftcontainer';
+import { useParams } from 'react-router-dom';
 const defaultEditorConfig = {
     theme: "vs-light",
     value: "//Type something",
@@ -17,11 +18,17 @@ const defaultEditorConfig = {
     height: "60vh",
     width: "400px"
 }
+var defaultcode =
+    `def main():
+    print("Hello World")
 
+if __name__ == "__main__":
+    main()
+`
 function Editorcomponent() {
     const monaco = useMonaco()
     const [config, setEditorconfig] = useState(defaultEditorConfig)
-    const [theme, setTheme] = useState("green-black")
+    const [theme, setTheme] = useState("vs-dark")
     const [fontSize, setFontsize] = useState("18px")
     const middelbarref = useRef(null)
     const maincontainerref = useRef(null)
@@ -30,10 +37,12 @@ function Editorcomponent() {
     const [width, setWidth] = useState(0)
     const containerref = useRef(null)
     const [language, setLanguage] = useState("python")
-    const [code, setCode] = useState("")
+    const [code, setCode] = useState(defaultcode)
     const [navbarHeight, setNavbarHeight] = useState(0)
     const [input, setInput] = useState("")
     const [TerminalOutput, setTerminaloutput] = useState("Output")
+    const routerParams = useParams()
+    const [questionId, setQuestionId] = useState(routerParams.id)
     let EditorOptionprops = {
         language,
         setLanguage,
@@ -44,6 +53,27 @@ function Editorcomponent() {
     }
     let Navbarprops = {
         height: navbarHeight
+    }
+    let questionprops = {
+        questionId
+    }
+    const runAllTestCases = () => {
+        const dataToRunCode = {
+            language,
+            code,
+            questionId
+        }
+        fetch("/runAllTestCases", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dataToRunCode)
+        }).then(res => res.json()).then(data => {
+            console.log(data)
+
+        })
+            .catch(err => console.log(err))
     }
     const runCode = () => {
         const dataToRunCode = {
@@ -71,10 +101,12 @@ function Editorcomponent() {
     }
     let editorTabsprops = {
         runCode,
-        TerminalOutput
+        TerminalOutput,
+        runAllTestCases
     }
 
     useEffect(() => {
+
         var drag = false
         var leftwidth = leftcontainerref.current.getBoundingClientRect().width
         middelbarref.current.addEventListener("mousedown",
@@ -134,7 +166,7 @@ function Editorcomponent() {
                     <div>
                         <Collabcode code={code} setCode={setCode} />
                     </div>
-                    <Leftcontainer />
+                    <Leftcontainer {...questionprops} />
                 </div>
                 <div className='middle-bar-editor' ref={middelbarref}>
                     <HiDotsVertical size={20} color="white" />

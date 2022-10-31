@@ -44,4 +44,5 @@
     background-color: var(--color-fg);
     cursor: pointer;
     color: white;
+    margin: 10px;
 }

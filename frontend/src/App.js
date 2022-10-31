@@ -8,6 +8,7 @@ import Editorpage from "./Screens/Editorpage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "./Context/UserContext";
+import Allquestions from "./Screens/Allquestions";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -23,10 +24,11 @@ function App() {
     <BrowserRouter>
       <UserContext.Provider value={{ userData, updateUserData }}>
         <Routes>
-          <Route path="/" element={<Editor />} />
+          <Route path="/solve/:id" element={<Editor />} />
           <Route path="/socket" element={<Socket />} />
           <Route path="/db" element={<DB />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/Allquestions" element={<Allquestions/>} />
         </Routes>
         <ToastContainer autoClose={4000} />
       </UserContext.Provider>

@@ -1,18 +1,31 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import '../Styles/Leftcontainer.css'
-function Leftcontainer() {
+import Questions from '../Assets/Questions/questions.json'
+function Leftcontainer({ questionId }) {
     const questioncontainerRef = useRef(null)
-    const connectcontainerref=useRef(null)
-    const tab1ref=useRef(null)
-    const tab2ref=useRef(null)
-
-    const cleanStyles=()=>{
+    const connectcontainerref = useRef(null)
+    const tab1ref = useRef(null)
+    const tab2ref = useRef(null)
+    const questions = Questions.questions
+    const [question, setCurrentquestion] = useState()
+    const cleanStyles = () => {
         questioncontainerRef.current.classList.remove("current-show")
         connectcontainerref.current.classList.remove("current-show")
         tab1ref.current.classList.remove("selected")
         tab2ref.current.classList.remove("selected")
 
     }
+    useEffect(() => {
+        console.log(questionId,questions)
+        for (let idx = 0; idx < questions.length; idx++) {
+            if (questions[idx].id == questionId) {
+                console.log(questions)
+                setCurrentquestion(questions[idx])
+                break
+            }
+        }
+        console.log(question)
+    }, [questionId]);
     const handletabclick = (e) => {
         const tabSelected = e.target.getAttribute("name")
         cleanStyles()
@@ -42,50 +55,72 @@ function Leftcontainer() {
             </div>
             <div className='main-container-question current-show' ref={questioncontainerRef}>
                 <div className='main-title'>
-                    My First Code
+                    {question?.title}
                 </div>
                 <div className='tags'>
-                    <div className='tag'>Easy</div>
-                    <div className='tag'>Arrays</div>
+                    {
+                        question?.tags.map((tag, index) => {
+                            return (
+                                <div className='tag' id={index}>{tag}</div>
+                            )
+                        })
+                    }       
+
                 </div>
                 <div className='main-description'>
-                    Your mother has sent you to the milkman with a cylindrical bottle. You have to pay the milkman the price for the bottle full of milk at a rate of ₹40 per litre of milk. You are given the radius (r) and the height (h) of the bottle in centimetres. You can assume the value of π as 3.14.
-                </div>
+                    {question?.description}
+                     </div>
                 <div className='sub-container'>
                     <div className='sub-title'>Input Format</div>
                     <div className='sub-content'>
-                        1 line containing two space separated integers - the radius and the height of the bottle (in centimetres).
-                    </div>
+                        {question?.input_format}
+                         </div>
                 </div>
                 <div className='sub-container'>
                     <div className='sub-title'>Output Format</div>
                     <div className='sub-content'>
-                    The first line contains 'T' denoting the no. of test cases.
-
-T lines each contain a number 'n' denoting the number of elements, followed by n space-separated numbers denoting the array elements.
-                    </div>
+                        {question?.output_format}
+                        </div>
                 </div>
                 <div className='main-title green'>
                     Examples
                 </div>
                 <div className='sub-container'>
                     <div className='sub-title'>Sample input</div>
-                    <div className='code-container'>
-                        2 34
-                    </div>
+                    {
+                        question?.sample_input.map((input, index) => {
+                            return (
+                                <div className='code-container'>
+                                    {input}
+                                </div>
+                            )
+                        })
+                    }
+
                 </div>
                 <div className='sub-container'>
                     <div className='sub-title'>Expected Output</div>
-                    <div className='code-container'>
-                        75.36
-                    </div>
+                    {
+                        question?.sample_output.map((output, index) => {
+                            return (
+                                <div className='code-container'>
+                                    {output}
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 <div className='main-title green'>
                     Constraints
                 </div>
                 <div className='constraints'>
-                    <div className='constraint'> 1 ≤ r ≤ 100</div>
-                    <div className='constraint'> 1 ≤ r ≤ 100</div>
+                    {
+                        question?.constraints.map((constraint, index) => {
+                            return (
+                                <div className='constraint' id={index}>{constraint}</div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>
