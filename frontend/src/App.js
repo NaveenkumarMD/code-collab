@@ -28,7 +28,7 @@ function App() {
           <Route path="/socket" element={<Socket />} />
           <Route path="/db" element={<DB />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/Allquestions" element={<Allquestions/>} />
+          <Route path="/" element={<Allquestions/>} />
         </Routes>
         <ToastContainer autoClose={4000} />
       </UserContext.Provider>

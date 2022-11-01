@@ -1,7 +1,24 @@
 import React, { useRef, useState, useEffect } from 'react'
 import '../Styles/Leftcontainer.css'
 import Questions from '../Assets/Questions/questions.json'
-function Leftcontainer({ questionId }) {
+import Questionview from './QuestonView'
+import { CopyToClipboard } from "react-copy-to-clipboard";
+function Leftcontainer({
+    questionId,
+    myVideo,
+    callAccepted,
+    callEnded,
+    callUser,
+    userVideo,
+    name,
+    setName,
+    me,
+    idToCall,
+    setIdToCall,
+    leaveCall,
+    receivingCall,
+    answerCall
+}) {
     const questioncontainerRef = useRef(null)
     const connectcontainerref = useRef(null)
     const tab1ref = useRef(null)
@@ -16,7 +33,7 @@ function Leftcontainer({ questionId }) {
 
     }
     useEffect(() => {
-        console.log(questionId,questions)
+        console.log(questionId, questions)
         for (let idx = 0; idx < questions.length; idx++) {
             if (questions[idx].id == questionId) {
                 console.log(questions)
@@ -51,77 +68,62 @@ function Leftcontainer({ questionId }) {
 
             </div>
             <div className='connect-container' ref={connectcontainerref}>
-                conect container
+                <div className="video-container">
+
+                    <h1 style={{ textAlign: "center", color: "white" }}>Video Chat</h1>
+                    <div>
+                        <div style={{ display: "flex", width: "90%" }}>
+                            <div style={{ width: "auto" }}>
+                                <video playsInline muted ref={myVideo} autoPlay />
+                            </div>
+                            <div style={{ width: "auto" }}>
+                                {callAccepted && !callEnded ? (
+                                    <video playsInline ref={userVideo} autoPlay />
+                                ) : null}
+                            </div>
+                        </div>
+                        <div>
+                            <input
+                                type="text"
+                                label="Name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                style={{ marginBottom: "20px" }}
+                                placeholder="Name"
+                            />
+                            <div style={{ color: "white" }}>id is.{me}</div>
+                            <CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
+
+                                <button>Copy ID </button>
+                            </CopyToClipboard>
+                            <input
+                                label="ID to call"
+                                value={idToCall}
+                                onChange={(e) => setIdToCall(e.target.value)}
+                                placeholder="user id to call"
+                            />
+                            <div>
+                                {callAccepted && !callEnded ? (
+                                    <button onClick={leaveCall}>End call</button>
+                                ) : (
+                                    <button onClick={() => callUser(idToCall)}>Call user</button>
+                                )}
+                                {idToCall}
+                            </div>
+                            <div>
+                                {receivingCall && !callAccepted ? (
+                                    <div>
+                                        <h1>{name} is calling...</h1>
+                                        <button onClick={answerCall}>Answer call</button>
+                                    </div>
+                                ) : null}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div className='main-container-question current-show' ref={questioncontainerRef}>
-                <div className='main-title'>
-                    {question?.title}
-                </div>
-                <div className='tags'>
-                    {
-                        question?.tags.map((tag, index) => {
-                            return (
-                                <div className='tag' id={index}>{tag}</div>
-                            )
-                        })
-                    }       
-
-                </div>
-                <div className='main-description'>
-                    {question?.description}
-                     </div>
-                <div className='sub-container'>
-                    <div className='sub-title'>Input Format</div>
-                    <div className='sub-content'>
-                        {question?.input_format}
-                         </div>
-                </div>
-                <div className='sub-container'>
-                    <div className='sub-title'>Output Format</div>
-                    <div className='sub-content'>
-                        {question?.output_format}
-                        </div>
-                </div>
-                <div className='main-title green'>
-                    Examples
-                </div>
-                <div className='sub-container'>
-                    <div className='sub-title'>Sample input</div>
-                    {
-                        question?.sample_input.map((input, index) => {
-                            return (
-                                <div className='code-container'>
-                                    {input}
-                                </div>
-                            )
-                        })
-                    }
-
-                </div>
-                <div className='sub-container'>
-                    <div className='sub-title'>Expected Output</div>
-                    {
-                        question?.sample_output.map((output, index) => {
-                            return (
-                                <div className='code-container'>
-                                    {output}
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                <div className='main-title green'>
-                    Constraints
-                </div>
-                <div className='constraints'>
-                    {
-                        question?.constraints.map((constraint, index) => {
-                            return (
-                                <div className='constraint' id={index}>{constraint}</div>
-                            )
-                        })
-                    }
-                </div>
+                <Questionview question={question} />
             </div>
         </div>
     )
