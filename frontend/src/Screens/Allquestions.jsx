@@ -14,6 +14,7 @@ function Allquestions() {
     const [topic, setTopic] = useState('All')
     const [difficulty, setDifficulty] = useState('All')
     const [type, setType] = useState('All')
+    const [countofQuestions, setCountofquestions] = useState(questions?.questions.length)
     const navigate = useNavigate()
     let a = -1
     let filterprops = {
@@ -35,7 +36,7 @@ function Allquestions() {
                     </div>
                     <AllquestionsFilter {...filterprops} />
                     <div>
-                        <div className='result-identifier-text'>Results | 20 problems</div>
+                        <div className='result-identifier-text'>Results | {countofQuestions} problems</div>
                         <table >
                             <thead>
                                 <tr className='title-table'>
@@ -47,21 +48,23 @@ function Allquestions() {
                             </thead>
                             <tbody>
 
-                                {questions.questions.map((question, index) => {
-                                    if (question.title.toLowerCase().includes(search.toLowerCase()) && (question.tags.includes(topic) || topic === 'All') && (question.difficulty === difficulty || difficulty === 'All') && (question.type === type || type === 'All')) {
-                                        a += 1;
-                                        return (
-                                            <tr className='question-container-bar' key={question.id}
-                                                onClick={() => navigate(`/solve/${question.id}`)}
-                                            >
-                                                <td className='table-sno'>{a + 1}.</td>
-                                                <td>{question.title}</td>
-                                                <td>{question.score}</td>
-                                                <td>{question.difficulty}</td>
-                                            </tr>
-                                        )
-                                    }
-                                })
+                                {   
+                                    questions.questions.map((question, index) => {
+                                        if (question.title.toLowerCase().includes(search.toLowerCase()) && (question.tags.includes(topic) || topic === 'All') && (question.difficulty === difficulty || difficulty === 'All') && (question.type === type || type === 'All')) {
+                                            a += 1;
+                                            return (
+                                                <tr className='question-container-bar' key={question.id}
+                                                    onClick={() => navigate(`/solve/${question.id}`)}
+                                                >
+                                                    <td className='table-sno'>{a + 1}.</td>
+                                                    <td>{question.title}</td>
+                                                    <td>{question.score}</td>
+                                                    <td>{question.difficulty}</td>
+                                                </tr>
+                                            )
+                                        }
+                                    })                     
+
                                 }
                             </tbody>
                         </table>

@@ -18,14 +18,26 @@ function Socket() {
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
+  const [EnableAudio, setEnabelAudio] = useState(true)
+  const [Enablevideo, setEnableVideo] = useState(false)
 
+
+  const toggleVideo = () => {
+    setEnableVideo(!Enablevideo)
+    stream.getVideoTracks()[0].enabled = Enablevideo
+  }
+  const toggleAudio = () => {
+    setEnabelAudio(!EnableAudio)
+    stream.getAudioTracks()[0].enabled = EnableAudio
+  }
   useEffect(() => {
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
+      .getUserMedia({ video: Enablevideo, audio: EnableAudio })
       .then((stream) => {
         setStream(stream);
         myVideo.current.srcObject = stream;
       });
+
 
     socket.on("me", (id) => {
       setMe(id);
@@ -90,7 +102,7 @@ function Socket() {
 
   return (
     <div className="video-container">
-    
+
       <h1 style={{ textAlign: "center" }}>Video Chat</h1>
       <div>
         <div style={{ display: "flex", width: "90%" }}>
@@ -114,7 +126,7 @@ function Socket() {
           />
           {me}
           <CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
-            
+
             <button>Copy ID </button>
           </CopyToClipboard>
           <input

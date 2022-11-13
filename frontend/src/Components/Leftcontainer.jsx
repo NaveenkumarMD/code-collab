@@ -3,6 +3,12 @@ import '../Styles/Leftcontainer.css'
 import Questions from '../Assets/Questions/questions.json'
 import Questionview from './QuestonView'
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import '../Styles/video.css'
+import { BiClipboard, BiPhoneCall, BiSearch } from "react-icons/bi"
+import { CgSearch } from "react-icons/cg"
+import { MdCallEnd, MdMic, MdVideoCall, MdVideocam, MdVideocamOff,MdMicOff } from "react-icons/md"
+import Avatar from "react-avatar"
+import ReactTooltip from "react-tooltip"
 function Leftcontainer({
     questionId,
     myVideo,
@@ -17,7 +23,11 @@ function Leftcontainer({
     setIdToCall,
     leaveCall,
     receivingCall,
-    answerCall
+    answerCall,
+    toggleAudio,
+    toggleVideo,
+    EnableAudio,
+    Enablevideo,
 }) {
     const questioncontainerRef = useRef(null)
     const connectcontainerref = useRef(null)
@@ -65,60 +75,124 @@ function Leftcontainer({
             <div className='left-container-tabs'>
                 <div className='selected' onClick={handletabclick} name="problem" ref={tab1ref}>Problem</div>
                 <div className='' onClick={handletabclick} name="connect" ref={tab2ref}>Connect</div>
-
             </div>
             <div className='connect-container' ref={connectcontainerref}>
                 <div className="video-container">
 
-                    <h1 style={{ textAlign: "center", color: "white" }}>Video Chat</h1>
-                    <div>
-                        <div style={{ display: "flex", width: "90%" }}>
-                            <div style={{ width: "auto" }}>
+                    <div style={{ marginTop: "20px" }}>
+                        <div className="video-main-container">
+                            <div className='video-containerx'>
                                 <video playsInline muted ref={myVideo} autoPlay />
                             </div>
-                            <div style={{ width: "auto" }}>
+                            <div className='video-containery'>
                                 {callAccepted && !callEnded ? (
                                     <video playsInline ref={userVideo} autoPlay />
                                 ) : null}
                             </div>
                         </div>
-                        <div>
-                            <input
-                                type="text"
-                                label="Name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                style={{ marginBottom: "20px" }}
-                                placeholder="Name"
-                            />
-                            <div style={{ color: "white" }}>id is.{me}</div>
-                            <CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
 
-                                <button>Copy ID </button>
-                            </CopyToClipboard>
-                            <input
-                                label="ID to call"
-                                value={idToCall}
-                                onChange={(e) => setIdToCall(e.target.value)}
-                                placeholder="user id to call"
-                            />
+                        <div className='mic-and-cam-container'>
                             <div>
-                                {callAccepted && !callEnded ? (
-                                    <button onClick={leaveCall}>End call</button>
-                                ) : (
-                                    <button onClick={() => callUser(idToCall)}>Call user</button>
-                                )}
-                                {idToCall}
+                                <div className='video-icon-container' onClick={toggleAudio} >
+                                    {
+                                        EnableAudio ? <MdMic /> : <MdMicOff />
+
+                                    }
+                                </div>
                             </div>
                             <div>
-                                {receivingCall && !callAccepted ? (
-                                    <div>
-                                        <h1>{name} is calling...</h1>
-                                        <button onClick={answerCall}>Answer call</button>
-                                    </div>
-                                ) : null}
+                                <div className='video-icon-container endcall' onClick={() => leaveCall()}>
+                                    <MdCallEnd  />
+                                </div>
                             </div>
+                            <div>
+                                <div className='video-icon-container' onClick={toggleVideo} >
+                                    {
+                                        Enablevideo ? <MdVideocam /> : <MdVideocamOff />
+                                    }
+                                </div>
+                            </div>
+
                         </div>
+                        <div  className='call-recieving-container'>
+                            {receivingCall && !callAccepted ? (
+                                <div>
+                                    <div className='namee'>{name || "Someone"} tries to connect</div>
+                                    <div className='call-accept-container'>
+                                    <div className='call-btn'
+                                        onClick={answerCall}
+                                    >
+                                        <span>Accept</span><BiPhoneCall />
+                                    </div>
+                                    <div className='call-btn cancel'
+                                        onClick={answerCall}
+                                    >
+                                        <span>Decline</span><BiPhoneCall />
+                                    </div>
+                                    </div>
+                                </div>
+                            ) : null}
+                        </div>
+                        <div className='call-log-container'>
+                            <div className='call-container'>
+                                <div className='flex input-search'>
+                                    <input
+                                        label="ID to call"
+                                        value={idToCall}
+                                        onChange={e => setIdToCall(e.target.value)}
+                                        type="text" placeholder='Enter the user ID' />
+                                    <BiSearch size={20} color="var(--color-fg)" />
+                                </div>
+                                <div className='call-btn'
+                                    onClick={() => callUser(idToCall)}
+                                >
+                                    <span>Call</span><BiPhoneCall />
+                                </div>
+
+                                <CopyToClipboard text={me} >
+                                    <div className='call-btn'>
+                                        <span>Copy</span><BiClipboard />
+                                    </div>
+                                </CopyToClipboard>
+                                {/* <ReactTooltip place="top" event="click" eventOff='mouseout' type="dark" /> */}
+                            </div>
+                            <div className='call-logs-main-container'>
+                                <div className='call-logs-hint-text'>
+                                    Recent call logs
+                                </div>
+                                <div className='recent-users-container'>
+                                    <div className='user-container'>
+                                        <div>
+                                            <Avatar name="Naveen kumar" size='40' round color='var(--color-fg)' />
+                                        </div>
+                                        <div className='name-container'>
+                                            <div >Naveenkumar M</div>
+                                            <div>12 days ago</div>
+                                        </div>
+                                    </div>
+                                    <div className='user-container'>
+                                        <div>
+                                            <Avatar name="Naveen kumar" size='40' round color='var(--color-fg)' />
+                                        </div>
+                                        <div className='name-container'>
+                                            <div >Naveenkumar M</div>
+                                            <div>12 days ago</div>
+                                        </div>
+                                    </div>
+                                    <div className='user-container'>
+                                        <div>
+                                            <Avatar name="Naveen kumar" size='40' round color='var(--color-fg)' />
+                                        </div>
+                                        <div className='name-container'>
+                                            <div >Naveenkumar M</div>
+                                            <div>12 days ago</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+              
                     </div>
                 </div>
             </div>

@@ -1,6 +1,137 @@
-/* .video-container{
-    position: absolute;
-    bottom: 10px;
-    left: 20px;
+.video-main-container {
+    display: flex;
+    max-width: 600px;
+    margin: 0px auto;
+    height: 280px
+}
 
-} */
+.video-containerx {
+    width: 300px;
+    height: 225px;    
+}
+
+.video-containerx>video {
+    width: 100%;
+    height: 100%;
+    border: 10px solid var(--color-fg);
+    border-radius: 5px;
+}
+
+.video-containery {
+    width: 300px;
+    height: 225px;   
+}
+
+.video-containery>video {
+    width: 100%;
+    border: 10px solid var(--color-fg);
+    border-radius: 5px;
+    height: 100%;
+}
+.mic-and-cam-container{
+    max-width: 400px;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.video-icon-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    cursor: pointer;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #35363C;
+}
+.endcall{
+    background-color: red;
+}
+.call-log-container{
+    max-width: 600px;
+    margin: 50px auto;
+}
+.call-search-div{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+.call-logs-main-container{
+    margin: 30px 20px;
+}
+.call-logs-hint-text{
+    color: var(--color-fg);
+}
+.user-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    width: 200px;
+    gap: 10px;
+
+}
+.name-container>div:first-child{
+    font-size: 14px;
+    margin-top: px;
+    color: #b6bacd;
+}
+.name-container>div:nth-child(2){
+    color: #828593;
+    font-size: 12px;
+}
+.recent-users-container{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    gap: 40px;
+    margin:20px 10px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.call-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.call-btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-fg);
+    padding: 10px 30px;
+    border-radius: 4px;
+    gap: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+.call-btn:hover{
+    background-color: #35363C;
+}
+.call-recieving-container{
+    max-width: 500px;
+    margin: 30px auto ;
+    display: flex;
+    flex-direction: column;
+
+ 
+}
+.namee{
+    color: #828593;
+    margin: 10px;
+}
+.call-accept-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.cancel{
+    background-color: red;
+}

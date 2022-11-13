@@ -13,7 +13,7 @@ import { useParams } from 'react-router-dom';
 import Peer from "simple-peer";
 import io from "socket.io-client";
 import '../Styles/video.css'
-const socket = io.connect("http://192.168.43.160:5000");
+const socket = io.connect("http://localhost:5000/");
 
 const defaultEditorConfig = {
     theme: "vs-light",
@@ -62,10 +62,21 @@ function Editorcomponent() {
     const myVideo = useRef();
     const userVideo = useRef();
     const connectionRef = useRef();
+    const [EnableAudio, setEnabelAudio] = useState(true)
+    const [Enablevideo, setEnableVideo] = useState(true)
+
+    const toggleVideo = () => {
+        setEnableVideo(!Enablevideo)
+        stream.getVideoTracks()[0].enabled = Enablevideo
+    }
+    const toggleAudio = () => {
+        setEnabelAudio(!EnableAudio)
+        stream.getAudioTracks()[0].enabled = EnableAudio
+    }
 
     useEffect(() => {
         navigator.mediaDevices
-            .getUserMedia({ video: true, audio: true })
+            .getUserMedia({ video:Enablevideo, audio: EnableAudio })
             .then((stream) => {
                 setStream(stream);
                 myVideo.current.srcObject = stream;
@@ -73,6 +84,7 @@ function Editorcomponent() {
 
         socket.on("me", (id) => {
             setMe(id);
+            console.log("Me is ",me)
         });
 
         socket.on("callUser", (data) => {
@@ -151,7 +163,11 @@ function Editorcomponent() {
         leaveCall,
         receivingCall,
         callAccepted,
-        answerCall
+        answerCall,
+        toggleAudio,
+        toggleVideo,
+        Enablevideo,
+        EnableAudio
 
 }
     let EditorOptionprops = {
