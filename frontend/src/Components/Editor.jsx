@@ -312,7 +312,7 @@ function Editorcomponent() {
       >
         <div className="left-container-editor" ref={leftcontainerref}>
           <div>
-            <Collabcode code={code} setCode={setCode} />
+            <Collabcode setCode={setCode} />
           </div>
           <Leftcontainer {...questionprops} {...socketprops} />
           <div className="socket-container"></div>

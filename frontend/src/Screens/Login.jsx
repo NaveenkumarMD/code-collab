@@ -10,7 +10,7 @@ import UserContext from "../Context/UserContext";
 import { GoogleLogin } from "react-google-login";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { doc, getDoc,setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from '../App'
 import { toast } from "react-toastify";
 function Login() {
@@ -26,18 +26,22 @@ function Login() {
       return toast.warning("Enter all the fields")
     }
     const docRef = doc(db, "users", data.email);
-    getDoc(docRef).then(docSnap=>{
-        if(docSnap.exists()){
-           let userdata=docSnap.data()
-           if (userData.password.trim()==data.password.trim()){
-              return toastGenerator("success","Login success")
-           }
-           toastGenerator("error","Password Incorrect")
-           return setTimeout(()=>{
+    getDoc(docRef).then(docSnap => {
+      if (docSnap.exists()) {
+        let userdata = docSnap.data()
+        if (userdata.password.trim() == data.password.trim()) {
+          localStorage.setItem("userdata", JSON.stringify({
+            name: userdata.name,
+            email: userdata.email
+          }))
+          toastGenerator("success", "Login success")
+          return setTimeout(() => {
             navigate("/")
-           })
+          }, [2000])
         }
-        toastGenerator("error","Mail ID not present")
+        toastGenerator("error", "Password Incorrect")
+      }
+      toastGenerator("error", "Mail ID not present")
 
     })
   };
@@ -91,7 +95,7 @@ function Login() {
               onFailure={responseGoogle}
             />
             <div className="signup-text">
-              Don't have an account?<span>Sign up</span>
+              Don't have an account?<span onClick={() => navigate("/signup")}>Sign up</span>
             </div>
           </div>
         </div>
