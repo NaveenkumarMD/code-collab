@@ -11,6 +11,7 @@ import Navbar from "./Navbar";
 import Leftcontainer from "./Leftcontainer";
 import { useParams } from "react-router-dom";
 import Peer from "simple-peer";
+import Questions from '../Assets/Questions/questions.json'
 import io from "socket.io-client";
 import "../Styles/video.css";
 const socket = io.connect("http://localhost:5000/");
@@ -47,7 +48,7 @@ function Editorcomponent() {
   const [TerminalOutput, setTerminaloutput] = useState("Output");
   const routerParams = useParams();
   const [questionId, setQuestionId] = useState(routerParams.id);
-
+  const [questions, setQuestions] = useState(Questions)
   //Socket for audio
   const [me, setMe] = useState("");
   const [stream, setStream] = useState();
@@ -205,10 +206,15 @@ function Editorcomponent() {
     questionId,
   };
   const runAllTestCases = () => {
+    console.log(questions)
+    var currquestion=questions?.questions.find(question=>question.id==questionId)
+    console.log(currquestion)
     const dataToRunCode = {
       language,
       code,
       questionId,
+      sample_input:currquestion.sample_input,
+      sample_output:currquestion.sample_output
     };
     fetch("/runAllTestCases", {
       method: "POST",
@@ -224,10 +230,11 @@ function Editorcomponent() {
       .catch((err) => console.log(err));
   };
   const runCode = () => {
+
     const dataToRunCode = {
       language,
       code,
-      input,
+      input
     };
     fetch("/runcode", {
       method: "POST",
