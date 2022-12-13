@@ -11,7 +11,7 @@ import Navbar from "./Navbar";
 import Leftcontainer from "./Leftcontainer";
 import { useParams } from "react-router-dom";
 import Peer from "simple-peer";
-import Questions from '../Assets/Questions/questions.json'
+import Questions from "../Assets/Questions/questions.json";
 import io from "socket.io-client";
 import "../Styles/video.css";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -51,7 +51,7 @@ function Editorcomponent() {
   const [TerminalOutput, setTerminaloutput] = useState("Output");
   const routerParams = useParams();
   const [questionId, setQuestionId] = useState(routerParams.id);
-  const [questions, setQuestions] = useState(Questions)
+  const [questions, setQuestions] = useState(Questions);
   //Socket for audio
   const [me, setMe] = useState("");
   const [stream, setStream] = useState();
@@ -70,7 +70,7 @@ function Editorcomponent() {
   const [EnableAudio, setEnabelAudio] = useState(true);
   const [Enablevideo, setEnableVideo] = useState(true);
 
-  let userDetails;
+  const [userDetails, setUserDetails] = useState();
 
   const toggleVideo = () => {
     setEnableVideo(!Enablevideo);
@@ -103,7 +103,22 @@ function Editorcomponent() {
     if (rightcontainerref.current)
       editorRef.current = rightcontainerref.current.querySelector(".editor");
 
-    userDetails = localStorage.getItem("userdata");
+    let details = JSON.parse(localStorage.getItem("userdata"));
+    setUserDetails(details);
+    if (details) {
+      const docRef = doc(db, "users", details.email);
+      getDoc(docRef).then((docSnap) => {
+        if (docSnap.exists()) {
+          let userdata = docSnap.data();
+          if (userdata.problems) {
+            const val = userdata.problems.find(
+              (prob) => prob.questionId === questionId
+            );
+            setCode(val.code);
+          }
+        }
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -146,6 +161,8 @@ function Editorcomponent() {
       peer.destroy();
       setCallEnded(true);
       console.log("disconnected");
+      sessionStorage.removeItem("isOwner");
+      window.location.reload(false);
     });
     connectionRef.current = peer;
     sessionStorage.setItem("isOwner", true);
@@ -175,6 +192,8 @@ function Editorcomponent() {
       peer.destroy();
       console.log("disconnected");
       setCallEnded(true);
+      sessionStorage.removeItem("isOwner");
+      window.location.reload(false);
     });
 
     peer.signal(callerSignal);
@@ -190,6 +209,8 @@ function Editorcomponent() {
       socket.send({ text: code, to: caller !== "" ? caller : idToCall });
     });
     editorRef.current.destroy();
+    sessionStorage.removeItem("isOwner");
+    window.location.reload(false);
   };
 
   let socketprops = {
@@ -229,15 +250,17 @@ function Editorcomponent() {
     questionId,
   };
   const runAllTestCases = () => {
-    console.log(questions)
-    var currquestion=questions?.questions.find(question=>question.id==questionId)
-    console.log(currquestion)
+    console.log(questions);
+    var currquestion = questions?.questions.find(
+      (question) => question.id == questionId
+    );
+    console.log(currquestion);
     const dataToRunCode = {
       language,
       code,
       questionId,
-      sample_input:currquestion.sample_input,
-      sample_output:currquestion.sample_output
+      sample_input: currquestion.sample_input,
+      sample_output: currquestion.sample_output,
     };
     fetch("/runAllTestCases", {
       method: "POST",
@@ -253,11 +276,10 @@ function Editorcomponent() {
       .catch((err) => console.log(err));
   };
   const runCode = () => {
-
     const dataToRunCode = {
       language,
       code,
-      input
+      input,
     };
     fetch("/runcode", {
       method: "POST",
@@ -281,9 +303,42 @@ function Editorcomponent() {
   };
 
   const saveCode = () => {
+    console.log("Saving code");
     if (code === "")
       return toastGenerator("warning", "Write some code to save!");
-    const docRef = doc(db, "users");
+    if (
+      sessionStorage.getItem("isOwner") &&
+      sessionStorage.getItem("isOwner") === "false"
+    )
+      return toastGenerator("warning", "You don't have access");
+    console.log(userDetails);
+    if (userDetails) {
+      console.log("saving");
+      const docRef = doc(db, "users", userDetails.email);
+      getDoc(docRef).then((docSnap) => {
+        if (docSnap.exists()) {
+          let userdata = docSnap.data();
+
+          if (userdata.problems) {
+            userdata.problems.forEach((problem) => {
+              if (problem.questionId === questionId) {
+                problem.code = code;
+              }
+            });
+          } else
+            userdata = {
+              ...userdata,
+              problems: [{ questionId: questionId, code: code }],
+            };
+
+          // let problems = [...userdata.problems];
+          console.log(userdata.problems);
+          setDoc(docRef, { problems: userdata.problems }, { merge: true }).then(
+            () => toastGenerator("success", "Code saved successfully")
+          );
+        }
+      });
+    }
   };
 
   let editorTabsprops = {
