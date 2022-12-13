@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserContext from "./Context/UserContext";
 import Allquestions from "./Screens/Allquestions";
+import Signup from "./Screens/Signup";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -28,6 +29,7 @@ function App() {
           <Route path="/socket" element={<Socket />} />
           <Route path="/db" element={<DB />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Allquestions/>} />
         </Routes>
         <ToastContainer autoClose={4000} />

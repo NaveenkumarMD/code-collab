@@ -16,7 +16,7 @@ function Allquestions() {
     const [type, setType] = useState('All')
     const [countofQuestions, setCountofquestions] = useState(questions?.questions.length)
     const navigate = useNavigate()
-    let a = -1
+    let a = 2
     let filterprops = {
         topic,
         setTopic,
