@@ -49,6 +49,10 @@ io.on("connection", (socket) => {
     console.log(data);
     io.to(data.to).emit("message", data.text);
   });
+  socket.on("forceDisconnect", () => {
+    console.log("force disconnect");
+    io.disconnectSockets();
+  });
 });
 
 // Share db socket

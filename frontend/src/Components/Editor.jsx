@@ -14,6 +14,9 @@ import Peer from "simple-peer";
 import Questions from '../Assets/Questions/questions.json'
 import io from "socket.io-client";
 import "../Styles/video.css";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../App";
+import { toastGenerator } from "../Functions/toast";
 const socket = io.connect("http://localhost:5000/");
 
 const defaultEditorConfig = {
@@ -67,6 +70,8 @@ function Editorcomponent() {
   const [EnableAudio, setEnabelAudio] = useState(true);
   const [Enablevideo, setEnableVideo] = useState(true);
 
+  let userDetails;
+
   const toggleVideo = () => {
     setEnableVideo(!Enablevideo);
     stream.getVideoTracks()[0].enabled = Enablevideo;
@@ -97,6 +102,8 @@ function Editorcomponent() {
     });
     if (rightcontainerref.current)
       editorRef.current = rightcontainerref.current.querySelector(".editor");
+
+    userDetails = localStorage.getItem("userdata");
   }, []);
 
   useEffect(() => {
@@ -134,7 +141,14 @@ function Editorcomponent() {
       setCode(data);
       editorRef.current.value = data;
     });
+
+    socket.on("disconnect", () => {
+      peer.destroy();
+      setCallEnded(true);
+      console.log("disconnected");
+    });
     connectionRef.current = peer;
+    sessionStorage.setItem("isOwner", true);
   };
 
   const answerCall = () => {
@@ -156,13 +170,22 @@ function Editorcomponent() {
       setCode(data);
       editorRef.current.value = data;
     });
+
+    socket.on("disconnect", () => {
+      peer.destroy();
+      console.log("disconnected");
+      setCallEnded(true);
+    });
+
     peer.signal(callerSignal);
     connectionRef.current = peer;
+    sessionStorage.setItem("isOwner", false);
   };
 
   const leaveCall = () => {
-    setCallEnded(true);
+    socket.emit("forceDisconnect");
     connectionRef.current.destroy();
+    setCallEnded(true);
     editorRef.current.removeEventListener("keyup", () => {
       socket.send({ text: code, to: caller !== "" ? caller : idToCall });
     });
@@ -256,10 +279,18 @@ function Editorcomponent() {
         console.log(err);
       });
   };
+
+  const saveCode = () => {
+    if (code === "")
+      return toastGenerator("warning", "Write some code to save!");
+    const docRef = doc(db, "users");
+  };
+
   let editorTabsprops = {
     runCode,
     TerminalOutput,
     runAllTestCases,
+    saveCode,
   };
 
   useEffect(() => {
