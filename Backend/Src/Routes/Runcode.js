@@ -26,38 +26,41 @@ router.post("/runcode", (req, res) => {
 
 })
 
-router.post("/runAllTestCases",(req,res)=>{
+router.post("/runAllTestCases",(req,response)=>{
     const {
         code,
         language,
         sample_input,
         sample_output
     } = req.body
-    if (!code || !language) {
-        return res.json({
+    if (!code || !language || !sample_input || ! sample_output) {
+        return response.json({
             err:"Provide the language and code"
         })
     }
     var results=[]
-    Promise.all(
-        sample_input.forEach((input,i)=>{
-            return new Promise(async (resolve)=>{
-                try {
-                    let res=await runcode(code,language,input)
-                    res=res.output
-                    results.push(sample_output[i]==res)
-                    resolve()
-                } catch (error) {
-                    results.push(false)
-                }
+    var input_len=sample_input.length
+    sample_input.forEach(async(element,i) => {
+        try{
+            var res=await runcode(code,language,sample_input[i])
+            res=res.output
+            if(res==sample_output[i]){
+                results.push(true)
+            }
+            else{
+                results.push(false)
+            }
+        }
+        catch(err){
+            results.push(false)
+        }
+        if(i==input_len-1){
+            console.log(results)
+            return response.json({
+                res:results
             })
-        })
-    ).then(()=>{
-        console.log(results)
-    })
-    
-    console.log(results)
-
+        }
+    });
     console.log("runcode function is called..")
 
 })

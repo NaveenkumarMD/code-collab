@@ -16,7 +16,7 @@ function Allquestions() {
     const [type, setType] = useState('All')
     const [countofQuestions, setCountofquestions] = useState(questions?.questions.length)
     const navigate = useNavigate()
-    let a = 0
+    let a = -1
     let filterprops = {
         topic,
         setTopic,
@@ -27,6 +27,12 @@ function Allquestions() {
         search,
         setSearch
     }
+    useEffect(()=>{
+        const userdata=JSON.parse(localStorage.getItem("userdata"))
+        if(!userdata){
+            navigate("/login")
+        }
+    },[])
     return (
         <div className='aqcontainer'>
             <div className='qcontainer'>

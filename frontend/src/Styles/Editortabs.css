@@ -46,3 +46,33 @@
     color: white;
     margin: 10px;
 }
+.testresults-container{
+    max-width: 100%;
+    margin: 0px auto;
+    background-color:#252A33;
+    height: 200px;
+    border-radius: 10px;
+    padding: 30px;
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 18px;
+}
+.container-ss{
+    max-width: 70%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.test-res{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
