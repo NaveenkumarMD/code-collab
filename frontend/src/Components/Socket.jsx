@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Peer from "simple-peer";
 import io from "socket.io-client";
-import '../Styles/video.css'
+import "../Styles/video.css";
 const socket = io.connect("http://192.168.43.160:5000");
 
 function Socket() {
@@ -18,18 +18,17 @@ function Socket() {
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
-  const [EnableAudio, setEnabelAudio] = useState(true)
-  const [Enablevideo, setEnableVideo] = useState(false)
-
+  const [EnableAudio, setEnabelAudio] = useState(true);
+  const [Enablevideo, setEnableVideo] = useState(false);
 
   const toggleVideo = () => {
-    setEnableVideo(!Enablevideo)
-    stream.getVideoTracks()[0].enabled = Enablevideo
-  }
+    setEnableVideo(!Enablevideo);
+    stream.getVideoTracks()[0].enabled = Enablevideo;
+  };
   const toggleAudio = () => {
-    setEnabelAudio(!EnableAudio)
-    stream.getAudioTracks()[0].enabled = EnableAudio
-  }
+    setEnabelAudio(!EnableAudio);
+    stream.getAudioTracks()[0].enabled = EnableAudio;
+  };
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: Enablevideo, audio: EnableAudio })
@@ -37,7 +36,6 @@ function Socket() {
         setStream(stream);
         myVideo.current.srcObject = stream;
       });
-
 
     socket.on("me", (id) => {
       setMe(id);
@@ -87,7 +85,7 @@ function Socket() {
       socket.emit("answerCall", { signal: data, to: caller });
     });
     peer.on("stream", (stream) => {
-      alert("Connected")
+      alert("Connected");
       userVideo.current.srcObject = stream;
     });
 
@@ -102,7 +100,6 @@ function Socket() {
 
   return (
     <div className="video-container">
-
       <h1 style={{ textAlign: "center" }}>Video Chat</h1>
       <div>
         <div style={{ display: "flex", width: "90%" }}>
@@ -126,7 +123,6 @@ function Socket() {
           />
           {me}
           <CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
-
             <button>Copy ID </button>
           </CopyToClipboard>
           <input
