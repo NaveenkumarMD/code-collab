@@ -110,11 +110,12 @@
             "input_format": "The first line contains 'T' denoting the no. of test cases. Next T lines each contain a number 'num'.",
             "output_format": "T lines each contain true or false denoting the answer for each test case.",
             "sample_input": [
-                "2",
+                "25",
                 "25",
                 "30"
             ],
             "sample_output": [
+                "true",
                 "true",
                 "false"
             ],

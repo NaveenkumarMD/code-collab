@@ -62,7 +62,7 @@ function Allquestions() {
                                                 <tr className='question-container-bar' key={question.id}
                                                     onClick={() => navigate(`/solve/${question.id}`)}
                                                 >
-                                                    <td className='table-sno'>{a + 1}.</td>
+                                                    <td className='table-sno'>{index + 1}.</td>
                                                     <td>{question.title}</td>
                                                     <td>{question.score}</td>
                                                     <td>{question.difficulty}</td>

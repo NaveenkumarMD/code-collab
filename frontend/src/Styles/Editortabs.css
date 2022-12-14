@@ -14,8 +14,9 @@
     background-color: var(--color-gray) !important;
 }
 .tabs-sub-header1>.tab-selected{
-    background-color: var(--color-gray1) !important;
+    background-color: #35363C !important;
     color: var(--color-fg) !important;
+    border-radius: 6px;
 }
 .tabs-sub-header1{
     display: flex;
@@ -65,7 +66,7 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 30px;
     font-size: 16px;
     font-weight: 500;
 }
@@ -75,4 +76,5 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    width: 30%;
 }

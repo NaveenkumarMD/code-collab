@@ -11,7 +11,7 @@ function EditorTabs(props) {
   const tab1contentref = useRef(null);
   const tab2contentref = useRef(null);
   const tab3contentref = useRef(null);
-
+  const {testcase_count,testcase_results}=props
   const [terminalLineData, setTerminalLineData] = useState([
     <TerminalOutput>{props.TerminalOutput}</TerminalOutput>,
   ]);
@@ -20,6 +20,12 @@ function EditorTabs(props) {
       <TerminalOutput>{props.TerminalOutput}</TerminalOutput>,
     ]);
   }, [props.TerminalOutput]);
+  useEffect(()=>{
+    tab3contentref.current.classList.remove("content-selected");
+    tab3ref.current.classList.remove("tab-selected");
+    tab1contentref.current.classList.add("content-selected");
+    tab1ref.current.classList.add("tab-selected");
+  },[testcase_results])
   const cleanstyles = () => {
     tab1contentref.current.classList.remove("content-selected");
     // tab2contentref.current.classList.remove("content-selected")
@@ -83,10 +89,26 @@ function EditorTabs(props) {
         <div className="testresults-container">
           <div>Results</div>
           <div className="container-ss">
-            <div className="test-res">
-              <FaInfoCircle color="#718c0" /> <TiTick color="green" />{" "}
-              <MdClose color="red" /> Test case 1
-            </div>
+            {
+              testcase_results.length>0 ?
+              testcase_results.map((result,index)=>{
+                return(
+                  <div className="test-res">
+                   {result==1?<TiTick color="green" />:<MdClose color="red" />}{" "}
+                  Test case {index+1}
+                </div>
+                )
+              })
+              :
+              Array(testcase_count).fill(0).map((_,index)=>{
+                return(
+                  <div className="test-res">
+                  <FaInfoCircle color="#718c0" /> {" "}
+                  Test case {index+1}
+                </div>
+                )
+              })
+            }
           </div>
         </div>
       </div>

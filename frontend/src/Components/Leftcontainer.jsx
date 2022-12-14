@@ -6,9 +6,11 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import '../Styles/video.css'
 import { BiClipboard, BiPhoneCall, BiSearch } from "react-icons/bi"
 import { CgSearch } from "react-icons/cg"
-import { MdCallEnd, MdMic, MdVideoCall, MdVideocam, MdVideocamOff,MdMicOff } from "react-icons/md"
+import { MdCallEnd, MdMic, MdVideoCall, MdVideocam, MdVideocamOff, MdMicOff } from "react-icons/md"
 import Avatar from "react-avatar"
 import ReactTooltip from "react-tooltip"
+import Youtubeview from './Youtubeview';
+import Mediumview from './Mediumview';
 function Leftcontainer({
     questionId,
     myVideo,
@@ -31,15 +33,23 @@ function Leftcontainer({
 }) {
     const questioncontainerRef = useRef(null)
     const connectcontainerref = useRef(null)
+    const mediumref = useRef(null)
+    const youtuberef = useRef(null)
     const tab1ref = useRef(null)
     const tab2ref = useRef(null)
+    const tab3ref = useRef(null)
+    const tab4ref = useRef(null)
     const questions = Questions.questions
     const [question, setCurrentquestion] = useState()
     const cleanStyles = () => {
         questioncontainerRef.current.classList.remove("current-show")
         connectcontainerref.current.classList.remove("current-show")
+        youtuberef.current.classList.remove("current-show")
+        mediumref.current.classList.remove("current-show")
         tab1ref.current.classList.remove("selected")
         tab2ref.current.classList.remove("selected")
+        tab3ref.current.classList.remove("selected")
+        tab4ref.current.classList.remove("selected")
 
     }
     useEffect(() => {
@@ -65,6 +75,13 @@ function Leftcontainer({
                 connectcontainerref.current.classList.add("current-show")
                 tab2ref.current.classList.add("selected")
                 break;
+            case "youtube":
+                youtuberef.current.classList.add("current-show")
+                tab3ref.current.classList.add("selected")
+                break;
+            case "medium":
+                mediumref.current.classList.add("current-show")
+                tab4ref.current.classList.add("selected")
 
             default:
                 break;
@@ -75,6 +92,8 @@ function Leftcontainer({
             <div className='left-container-tabs'>
                 <div className='selected' onClick={handletabclick} name="problem" ref={tab1ref}>Problem</div>
                 <div className='' onClick={handletabclick} name="connect" ref={tab2ref}>Connect</div>
+                <div className='' onClick={handletabclick} name="youtube" ref={tab3ref}>Youtube</div>
+                <div className='' onClick={handletabclick} name="medium" ref={tab4ref}>Medium</div>
             </div>
             <div className='connect-container' ref={connectcontainerref}>
                 <div className="video-container">
@@ -102,7 +121,7 @@ function Leftcontainer({
                             </div>
                             <div>
                                 <div className='video-icon-container endcall' onClick={() => leaveCall()}>
-                                    <MdCallEnd  />
+                                    <MdCallEnd />
                                 </div>
                             </div>
                             <div>
@@ -114,21 +133,21 @@ function Leftcontainer({
                             </div>
 
                         </div>
-                        <div  className='call-recieving-container'>
+                        <div className='call-recieving-container'>
                             {receivingCall && !callAccepted ? (
                                 <div>
                                     <div className='namee'>{name || "Someone"} tries to connect</div>
                                     <div className='call-accept-container'>
-                                    <div className='call-btn'
-                                        onClick={answerCall}
-                                    >
-                                        <span>Accept</span><BiPhoneCall />
-                                    </div>
-                                    <div className='call-btn cancel'
-                                        onClick={answerCall}
-                                    >
-                                        <span>Decline</span><BiPhoneCall />
-                                    </div>
+                                        <div className='call-btn'
+                                            onClick={answerCall}
+                                        >
+                                            <span>Accept</span><BiPhoneCall />
+                                        </div>
+                                        <div className='call-btn cancel'
+                                            onClick={answerCall}
+                                        >
+                                            <span>Decline</span><BiPhoneCall />
+                                        </div>
                                     </div>
                                 </div>
                             ) : null}
@@ -192,12 +211,18 @@ function Leftcontainer({
                             </div>
 
                         </div>
-              
+
                     </div>
                 </div>
             </div>
             <div className='main-container-question current-show' ref={questioncontainerRef}>
                 <Questionview question={question} />
+            </div>
+            <div className='main-container-youtube' ref={youtuberef}>
+                <Youtubeview />
+            </div>
+            <div className='main-container-medium' ref={mediumref}>
+                <Mediumview />
             </div>
         </div>
     )

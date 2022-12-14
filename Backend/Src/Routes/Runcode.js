@@ -55,7 +55,7 @@ router.post("/runAllTestCases",(req,response)=>{
             results.push(false)
         }
         if(i==input_len-1){
-            console.log(results)
+            console.log("results" ,"is sent",results)
             return response.json({
                 res:results
             })

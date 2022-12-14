@@ -52,6 +52,10 @@ function Editorcomponent() {
   const routerParams = useParams();
   const [questionId, setQuestionId] = useState(routerParams.id);
   const [questions, setQuestions] = useState(Questions);
+  //test cases
+  const [testcase_count, settestcaseCount] = useState(0)
+  const [testcase_results, setTestcaseresults] = useState(0)
+
   //Socket for audio
   const [me, setMe] = useState("");
   const [stream, setStream] = useState();
@@ -272,9 +276,16 @@ function Editorcomponent() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setTestcaseresults(data.res);
       })
       .catch((err) => console.log(err));
   };
+  useEffect(()=>{
+    var currquestion = questions?.questions.find(
+      (question) => question.id == questionId
+    );
+    settestcaseCount(currquestion?.sample_input.length)
+  },[questionId,questions])
   const runCode = () => {
     const dataToRunCode = {
       language,
@@ -303,6 +314,7 @@ function Editorcomponent() {
   };
 
   const saveCode = () => {
+    toastGenerator("info","Saving code")
     console.log("Saving code");
     if (code === "")
       return toastGenerator("warning", "Write some code to save!");
@@ -346,6 +358,8 @@ function Editorcomponent() {
     TerminalOutput,
     runAllTestCases,
     saveCode,
+    testcase_count,
+    testcase_results
   };
 
   useEffect(() => {
@@ -379,7 +393,7 @@ function Editorcomponent() {
         // containerref.current.removeEventListener("mouseup")
         // containerref.current.removeEventListener("mousemove")
         // middelbarref.current.removeEventListener("mousedown")
-      } catch (error) {}
+      } catch (error) { }
     };
   }, []);
   const handlemousemoveonscreen = (e) => {

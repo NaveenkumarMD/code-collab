@@ -27,7 +27,7 @@
     display: none;
 }
 .current-show{
-    display: block;
+    display: block !important;
 }
 .main-title{
     font-size: 20px;
@@ -111,4 +111,12 @@
     border-radius: 4px;
     background-color: rgb(53, 54, 60);
     color: white;
+}
+.main-container-youtube{
+    padding: 35px 25px;
+    display: none;
+}
+.main-container-medium{
+    padding: 35px 25px;
+    display: none;
 }
