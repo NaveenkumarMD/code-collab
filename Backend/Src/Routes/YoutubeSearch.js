@@ -4,7 +4,7 @@ const youtubesearchapi = require("youtube-search-api");
 
 router.post("/search", (req, res) => {
   youtubesearchapi
-    .GetListByKeyword(req.body.searchTerms, false, 5)
+    .GetListByKeyword(req.body.searchTerm, false, 5)
     .then((result) => res.json(result))
     .then((err) => console.log(err));
 });

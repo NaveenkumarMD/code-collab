@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import '../Styles/youtube.css'
-function Youtubeview() {
+import Questions from "../Assets/Questions/questions.json"
+
+function Youtubeview({questionId}) {
     const [data,setdata]=useState([])
     useEffect(() => {
         fetch("/search", {
@@ -10,7 +12,7 @@ function Youtubeview() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                search: "hello"
+                searchTerm: `${Questions.questions[questionId-1].title} + "problem"`
             })
         })
             .then((res) => res.json())
@@ -19,6 +21,7 @@ function Youtubeview() {
                 setdata(data.items)
             })
     }, [])
+    
     return (
         <div>
             <div>Recommended videos</div>
@@ -29,7 +32,7 @@ function Youtubeview() {
                             return
                         }
                         return (
-                            <div className='youtube-card'>
+                            <a className='youtube-card' href={`https://youtube.com/watch/${item.id}`}  target="_blank" rel="noopener noreferrer">
                                 <div className='youtube-card-image'>
                                     <img src={item.thumbnail?.thumbnails[0]?.url} alt='youtube' />
                                 </div>
@@ -38,7 +41,7 @@ function Youtubeview() {
                                     <div className='ytb-channel'>{item.channelTitle}</div>
 
                                 </div>
-                            </div>
+                            </a>
                         )
                     })
                 }

@@ -92,8 +92,8 @@ function Leftcontainer({
             <div className='left-container-tabs'>
                 <div className='selected' onClick={handletabclick} name="problem" ref={tab1ref}>Problem</div>
                 <div className='' onClick={handletabclick} name="connect" ref={tab2ref}>Connect</div>
-                <div className='' onClick={handletabclick} name="youtube" ref={tab3ref}>Youtube</div>
-                <div className='' onClick={handletabclick} name="medium" ref={tab4ref}>Medium</div>
+                <div className='' onClick={handletabclick} name="youtube" ref={tab3ref}>Videos</div>
+                <div className='' onClick={handletabclick} name="medium" ref={tab4ref}>Articles</div>
             </div>
             <div className='connect-container' ref={connectcontainerref}>
                 <div className="video-container">
@@ -219,10 +219,10 @@ function Leftcontainer({
                 <Questionview question={question} />
             </div>
             <div className='main-container-youtube' ref={youtuberef}>
-                <Youtubeview />
+                <Youtubeview questionId={questionId}/>
             </div>
             <div className='main-container-medium' ref={mediumref}>
-                <Mediumview />
+                <Mediumview questionId={questionId}/>
             </div>
         </div>
     )
