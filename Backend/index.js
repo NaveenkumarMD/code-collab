@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 5000;
 app.use(require("./Src/Routes/index"));
 app.use(require("./Src/Routes/Runcode"));
 app.use(require("./Src/Routes/YoutubeSearch"));
+app.use(require("./Src/Routes/googelsearch"))
 
 const server = app.listen(PORT, () => {
   console.log("App is running at", PORT);
