@@ -1,15 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import UserContext from '../Context/UserContext'
+import Questioncontext from '../Context/Questioncontext'
 
 function Questionview() {
-    const {question,setQuestion}=useContext(UserContext)
-    useEffect(()=>{
-        console.log(question)
-    },[])
+    const [question,setQuestion]=useState(JSON.parse(localStorage.getItem("question")))
     return (
         <>
 
-            {/* <div className='main-title'>
+            <div className='main-title'>
                 {question?.title}
             </div>
             <div className='tags'>
@@ -76,7 +74,7 @@ function Questionview() {
                         )
                     })
                 }
-            </div> */}
+            </div>
                     </>
     )
 }

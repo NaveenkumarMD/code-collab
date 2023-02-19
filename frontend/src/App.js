@@ -16,14 +16,21 @@ import { getAnalytics } from "firebase/analytics";
 import {getFirestore} from "firebase/firestore"
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { green, purple } from '@mui/material/colors';
+import Questioncontext from "./Context/Questioncontext";
+import addx from "./Functions/x";
 
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
-      main: purple[500],
+      main: '#34B37A',
     },
     secondary: {
-      main: green[500],
+      main: '#2ec5d3',
+    },
+    background: {
+      default: '#1C1D1D',
+      paper: '#1C1D1D',
     },
   },
 });
@@ -49,10 +56,6 @@ function App() {
   });
   const [question,setQuestion]=useState({})
 
-  const updateQuestion=(newquestion)=>{
-    setQuestion(newquestion)
-  }
-
   const updateUserData = (newuserData) => {
     setUserData({ ...userData, ...newuserData });
   };
@@ -60,7 +63,8 @@ function App() {
   return (
     <BrowserRouter>
     <ThemeProvider theme={theme}>
-      <UserContext.Provider value={{ userData, updateUserData,question,setQuestion }}>
+      <Questioncontext.Provider value={{question,setQuestion}}>
+      <UserContext.Provider value={{ userData, updateUserData }}>
         <Routes>
           <Route path="/solve/:id" element={<Editor />} />
           <Route path="/socket" element={<Socket />} />
@@ -71,6 +75,7 @@ function App() {
         </Routes>
         <ToastContainer autoClose={4000} />
       </UserContext.Provider>
+      </Questioncontext.Provider> 
       </ThemeProvider>
     </BrowserRouter>
   );

@@ -92,7 +92,7 @@ function Leftcontainer({
             case "comment":
                 commentref.current.classList.add("current-show")
                 tab5ref.current.classList.add("selected")
-
+                break
             default:
                 break;
         }

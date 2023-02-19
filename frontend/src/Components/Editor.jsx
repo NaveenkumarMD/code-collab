@@ -17,8 +17,7 @@ import "../Styles/video.css";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../App";
 import { toastGenerator } from "../Functions/toast";
-import UserContext from "../Context/UserContext";
-import { FaUncharted } from "react-icons/fa";
+import Questioncontext from "../Context/Questioncontext";
 const socket = io.connect("http://localhost:5005/");
 
 const defaultEditorConfig = {
@@ -37,7 +36,7 @@ if __name__ == "__main__":
 `;
 function Editorcomponent() {
   const monaco = useMonaco();
-  const {question,setQuestion} =useContext(UserContext)
+  const {question,setQuestion} =useContext(Questioncontext)
   const [config, setEditorconfig] = useState(defaultEditorConfig);
   const [theme, setTheme] = useState("vs-dark");
   const [fontSize, setFontsize] = useState("18px");
@@ -417,13 +416,16 @@ function Editorcomponent() {
       const docRef=doc(db,"questions",questionId)
       const docSnap=await getDoc(docRef);
       if (docSnap.exists()) {
-        setQuestion(docSnap.data())
-        console.log(docSnap.data())
+      (docSnap.data())
+        console.log("questions is ",docSnap.data())
+        setQuestion(docSnap.data())      
+        localStorage.setItem("question",JSON.stringify(docSnap.data()))  
       } else {
         console.log("No such document!");
       }
     })()
   },[])
+
   return (
     <div ref={maincontainerref} className="main-container">
       <Navbar {...Navbarprops} />

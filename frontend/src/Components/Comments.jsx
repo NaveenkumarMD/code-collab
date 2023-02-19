@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
@@ -6,76 +6,116 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import { Grid, Button, TextField } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+
+import { Box } from '@mui/material';
+
+import { db } from '../App';
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { toastGenerator } from '../Functions/toast';
 
 function Comments() {
-  return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Brunch this weekend?"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Ali Connors
-              </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Summer BBQ"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                to Scott, Alex, Jennifer
-              </Typography>
-              {" — Wish I could come, but I'm out of town this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Oui Oui"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: 'inline' }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Sandra Adams
-              </Typography>
-              {' — Do you have Paris recommendations? Have you ever…'}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-    </List>
-  );
+    const [comments, setComments] = useState([])
+    const [reload, setreload] = useState("1")
+    useEffect(() => {
+        const data = JSON.parse(localStorage.getItem("question"))
+        setComments(data.comments)
+    }, [reload])
+    return (
+        <>
+            <Box sx={{ p: "60px" }}>
+                <Newcomment setreload={setreload}  setComments={setComments}/>
+            </Box>
+            <Typography color="primary" variant='h5' >Other's comments</Typography>
+            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+
+                {
+                    comments && comments.map((com, idx) => {
+                        return (
+                            <>
+                                <ListItem alignItems="flex-start">
+                                    <ListItemAvatar>
+                                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={com.name}
+                                        secondary={
+                                            <React.Fragment>
+                                                {com.comment}
+                                            </React.Fragment>
+                                        }
+                                    />
+                                </ListItem>
+                                <Divider variant="inset" component="li" />
+                            </>
+
+                        )
+                    })
+                }
+
+            </List>
+
+        </>
+    );
 }
 export default Comments
+
+function Newcomment({ setreload,setComments }) {
+    const [comment, setComment] = useState("")
+    const handleclick = async () => {
+        let userdata = JSON.parse(localStorage.getItem("userdata"))
+        let questiondata = JSON.parse(localStorage.getItem("question"))
+        questiondata = {
+            ...questiondata,
+            comments: [
+                ...(questiondata.comments ? questiondata.comments : []),
+                {
+                    name: userdata.name,
+                    email: userdata.email,
+                    comment
+                }
+            ]
+        }
+        setComments([
+            ...(questiondata.comments ? questiondata.comments : []),
+            {
+                name: userdata.name,
+                email: userdata.email,
+                comment
+            }
+        ])
+        localStorage.setItem("question", JSON.stringify(questiondata))
+        const questionref = doc(db, "questions", `${questiondata.id}`)
+        setreload("1")
+        try {
+            await updateDoc(questionref, {
+                comments: arrayUnion({
+                    name: userdata.name,
+                    email: userdata.email,
+                    comment
+                })
+            });
+            toastGenerator("success", "Comment updated")
+        } catch (error) {
+            toastGenerator("error", "Failed to comment")
+        }
+
+
+    }
+    return (
+        <>
+            <Grid container sx={{ gap: "20px" }} item>
+                <Grid item>
+                    <TextField onChange={e => setComment(e.target.value)} sx={{ width: "400px" }} fullWidth label="Comment" variant="standard" />
+                </Grid>
+
+                <Grid item alignItems="stretch" style={{ display: "flex" }}>
+                    <div className="btn-run" onClick={handleclick}>
+                        Submit
+                    </div>
+                </Grid>
+            </Grid>
+        </>
+    )
+}
