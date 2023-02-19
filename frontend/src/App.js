@@ -14,7 +14,19 @@ import Signup from "./Screens/Signup";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getFirestore} from "firebase/firestore"
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { green, purple } from '@mui/material/colors';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: purple[500],
+    },
+    secondary: {
+      main: green[500],
+    },
+  },
+});
 const firebaseConfig = {
   apiKey: "AIzaSyAk5go6VlGe9cvE2-5mjZ_tkPLsoxDHzfo",
   authDomain: "archive-39cf2.firebaseapp.com",
@@ -35,6 +47,11 @@ function App() {
     userName: "",
     email: "",
   });
+  const [question,setQuestion]=useState({})
+
+  const updateQuestion=(newquestion)=>{
+    setQuestion(newquestion)
+  }
 
   const updateUserData = (newuserData) => {
     setUserData({ ...userData, ...newuserData });
@@ -42,7 +59,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ userData, updateUserData }}>
+    <ThemeProvider theme={theme}>
+      <UserContext.Provider value={{ userData, updateUserData,question,setQuestion }}>
         <Routes>
           <Route path="/solve/:id" element={<Editor />} />
           <Route path="/socket" element={<Socket />} />
@@ -53,6 +71,7 @@ function App() {
         </Routes>
         <ToastContainer autoClose={4000} />
       </UserContext.Provider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

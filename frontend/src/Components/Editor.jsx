@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useContext } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
 import "../Styles/Editor.css";
 import "../Styles/Utilities.css";
@@ -17,7 +17,9 @@ import "../Styles/video.css";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../App";
 import { toastGenerator } from "../Functions/toast";
-const socket = io.connect("http://localhost:5000/");
+import UserContext from "../Context/UserContext";
+import { FaUncharted } from "react-icons/fa";
+const socket = io.connect("http://localhost:5005/");
 
 const defaultEditorConfig = {
   theme: "vs-light",
@@ -35,6 +37,7 @@ if __name__ == "__main__":
 `;
 function Editorcomponent() {
   const monaco = useMonaco();
+  const {question,setQuestion} =useContext(UserContext)
   const [config, setEditorconfig] = useState(defaultEditorConfig);
   const [theme, setTheme] = useState("vs-dark");
   const [fontSize, setFontsize] = useState("18px");
@@ -252,6 +255,7 @@ function Editorcomponent() {
   };
   let questionprops = {
     questionId,
+    questionx:question
   };
   const runAllTestCases = () => {
     console.log(questions);
@@ -408,6 +412,18 @@ function Editorcomponent() {
   const handleediorchange = (newValue, e) => {
     setCode(newValue);
   };
+  useEffect(()=>{
+    (async ()=>{
+      const docRef=doc(db,"questions",questionId)
+      const docSnap=await getDoc(docRef);
+      if (docSnap.exists()) {
+        setQuestion(docSnap.data())
+        console.log(docSnap.data())
+      } else {
+        console.log("No such document!");
+      }
+    })()
+  },[])
   return (
     <div ref={maincontainerref} className="main-container">
       <Navbar {...Navbarprops} />
@@ -421,7 +437,7 @@ function Editorcomponent() {
           <div>
             <Collabcode setCode={setCode} />
           </div>
-          <Leftcontainer {...questionprops} {...socketprops} />
+          <Leftcontainer {...questionprops} {...socketprops}  />
           <div className="socket-container"></div>
         </div>
         <div className="middle-bar-editor" ref={middelbarref}>

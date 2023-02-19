@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import UserContext from '../Context/UserContext'
 
-function Questionview({ question }) {
+function Questionview() {
+    const {question,setQuestion}=useContext(UserContext)
+    useEffect(()=>{
+        console.log(question)
+    },[])
     return (
         <>
 
-            <div className='main-title'>
+            {/* <div className='main-title'>
                 {question?.title}
             </div>
             <div className='tags'>
@@ -71,7 +76,7 @@ function Questionview({ question }) {
                         )
                     })
                 }
-            </div>
+            </div> */}
                     </>
     )
 }

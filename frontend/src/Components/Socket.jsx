@@ -3,7 +3,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 import "../Styles/video.css";
-const socket = io.connect("http://192.168.43.160:5000");
+const socket = io.connect("http://192.168.43.160:5005");
 
 function Socket() {
   const [me, setMe] = useState("");

@@ -11,6 +11,7 @@ import Avatar from "react-avatar"
 import ReactTooltip from "react-tooltip"
 import Youtubeview from './Youtubeview';
 import Mediumview from './Mediumview';
+import Comments from './Comments';
 function Leftcontainer({
     questionId,
     myVideo,
@@ -30,39 +31,44 @@ function Leftcontainer({
     toggleVideo,
     EnableAudio,
     Enablevideo,
+    questionx
 }) {
     const questioncontainerRef = useRef(null)
     const connectcontainerref = useRef(null)
     const mediumref = useRef(null)
     const youtuberef = useRef(null)
+    const commentref=useRef(null)
     const tab1ref = useRef(null)
     const tab2ref = useRef(null)
     const tab3ref = useRef(null)
     const tab4ref = useRef(null)
+    const tab5ref = useRef(null)
     const questions = Questions.questions
-    const [question, setCurrentquestion] = useState()
+    const [question, setCurrentquestion] = useState(questionx)
     const cleanStyles = () => {
         questioncontainerRef.current.classList.remove("current-show")
         connectcontainerref.current.classList.remove("current-show")
         youtuberef.current.classList.remove("current-show")
         mediumref.current.classList.remove("current-show")
+        commentref.current.classList.remove("current-show")
         tab1ref.current.classList.remove("selected")
         tab2ref.current.classList.remove("selected")
         tab3ref.current.classList.remove("selected")
         tab4ref.current.classList.remove("selected")
+        tab5ref.current.classList.remove("selected")
 
     }
-    useEffect(() => {
-        console.log(questionId, questions)
-        for (let idx = 0; idx < questions.length; idx++) {
-            if (questions[idx].id == questionId) {
-                console.log(questions)
-                setCurrentquestion(questions[idx])
-                break
-            }
-        }
-        console.log(question)
-    }, [questionId]);
+    // useEffect(() => {
+    //     console.log(questionId, questions)
+    //     for (let idx = 0; idx < questions.length; idx++) {
+    //         if (questions[idx].id === questionId) {
+    //             console.log(questions)
+    //             setCurrentquestion(questions[idx])
+    //             break
+    //         }
+    //     }
+    //     console.log(question)
+    // }, [questionId]);
     const handletabclick = (e) => {
         const tabSelected = e.target.getAttribute("name")
         cleanStyles()
@@ -81,7 +87,11 @@ function Leftcontainer({
                 break;
             case "medium":
                 mediumref.current.classList.add("current-show")
-                tab4ref.current.classList.add("selected")
+                tab4ref.current.classList.add("selected");
+                break
+            case "comment":
+                commentref.current.classList.add("current-show")
+                tab5ref.current.classList.add("selected")
 
             default:
                 break;
@@ -94,6 +104,7 @@ function Leftcontainer({
                 <div className='' onClick={handletabclick} name="connect" ref={tab2ref}>Connect</div>
                 <div className='' onClick={handletabclick} name="youtube" ref={tab3ref}>Videos</div>
                 <div className='' onClick={handletabclick} name="medium" ref={tab4ref}>Articles</div>
+                <div className='' onClick={handletabclick} name="comment" ref={tab5ref}>Comment</div>
             </div>
             <div className='connect-container' ref={connectcontainerref}>
                 <div className="video-container">
@@ -224,6 +235,10 @@ function Leftcontainer({
             <div className='main-container-medium' ref={mediumref}>
                 <Mediumview questionId={questionId}/>
             </div>
+            <div className='main-container-comment' ref={commentref}>
+                <Comments questionId={questionId}/>
+            </div>
+
         </div>
     )
 }

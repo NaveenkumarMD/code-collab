@@ -55,6 +55,7 @@ function Mediumview({questionId}) {
                     
                 }
             </div>
+
         </div>
     )
 }
