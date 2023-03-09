@@ -23,7 +23,7 @@ const server = app.listen(PORT, () => {
   console.log("App is running at", PORT);
 });
 
-//call socket
+// call socket
 
 const io = require("socket.io")(server, {
   cors: {
@@ -44,11 +44,16 @@ io.on("connection", (socket) => {
       name: data.name,
     });
   });
+
+
   socket.on("answerCall", (data) =>
     io.to(data.to).emit("callAccepted", data.signal)
   );
   socket.on("message", (data) => {
-    console.log(data);
+    console.log("mesage is ",data.text);
+    if(data.text==="interview"){
+      io.to(data.to).emit("message", "interview");
+    }
     io.to(data.to).emit("message", data.text);
   });
   socket.on("forceDisconnect", () => {
@@ -56,6 +61,65 @@ io.on("connection", (socket) => {
     io.disconnectSockets();
   });
 });
+// const io = require("socket.io")(server, {
+//   cors: {
+//     origin: ["http://localhost:3000", "192.168.43.16:3000"],
+//     methods: ["GET", "POST"],
+//   },
+// });
+
+// const connectedUsers = {}; // to store socket connections of connected users
+
+// io.on("connection", (socket) => {
+//   // add user's socket connection to connectedUsers map
+//   connectedUsers[socket.id] = socket;
+
+//   // send the user their own socket id
+//   socket.emit("me", socket.id);
+
+//   // when a user disconnects, remove their socket connection from connectedUsers map
+//   socket.on("disconnect", () => {
+//     delete connectedUsers[socket.id];
+//     socket.broadcast.emit("callEnded");
+//   });
+
+//   // when a user calls another user, emit the callUser event to the recipient
+//   socket.on("callUser", (data) => {
+//     const recipientSocket = connectedUsers[data.userToCall];
+//     if (recipientSocket) {
+//       recipientSocket.emit("callUser", {
+//         signal: data.signalData,
+//         from: data.from,
+//         name: data.name,
+//       });
+//     }
+//   });
+
+//   // when a user answers a call, emit the callAccepted event to the caller
+//   socket.on("answerCall", (data) => {
+//     const callerSocket = connectedUsers[data.from];
+//     if (callerSocket) {
+//       callerSocket.emit("callAccepted", data.signal);
+//     }
+//   });
+
+//   // when a user sends a message, emit the message event to the recipient
+//   socket.on("message", (data) => {
+//     const recipientSocket = connectedUsers[data.to];
+//     if (recipientSocket) {
+//       recipientSocket.emit("message", data.text);
+//     }
+//   });
+
+//   // when a user wants to force disconnect all connected users, disconnect all sockets
+//   socket.on("forceDisconnect", () => {
+//     console.log("force disconnect");
+//     Object.values(connectedUsers).forEach((socket) => {
+//       socket.disconnect();
+//     });
+//     connectedUsers = {};
+//   });
+// });
 
 // Share db socket
 

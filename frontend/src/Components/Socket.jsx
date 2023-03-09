@@ -20,7 +20,7 @@ function Socket() {
   const connectionRef = useRef();
   const [EnableAudio, setEnabelAudio] = useState(true);
   const [Enablevideo, setEnableVideo] = useState(false);
-
+ 
   const toggleVideo = () => {
     setEnableVideo(!Enablevideo);
     stream.getVideoTracks()[0].enabled = Enablevideo;
@@ -29,6 +29,7 @@ function Socket() {
     setEnabelAudio(!EnableAudio);
     stream.getAudioTracks()[0].enabled = EnableAudio;
   };
+
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: Enablevideo, audio: EnableAudio })

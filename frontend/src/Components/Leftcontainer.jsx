@@ -13,6 +13,7 @@ import Youtubeview from './Youtubeview';
 import Mediumview from './Mediumview';
 import Comments from './Comments';
 function Leftcontainer({
+    setAsinterview,
     questionId,
     myVideo,
     callAccepted,
@@ -143,6 +144,16 @@ function Leftcontainer({
                                 </div>
                             </div>
 
+                        </div>
+                        <div className='call-recieving-container'>
+                                    {
+                                        callAccepted &&
+                                        <div className='call-btn'
+                                        onClick={setAsinterview}
+                                    >
+                                        <span>Interview</span><BiPhoneCall />
+                                    </div>
+                                    }
                         </div>
                         <div className='call-recieving-container'>
                             {receivingCall && !callAccepted ? (

@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { Grid, Button, TextField } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
-
+import _ from "underscore"
 import { Box } from '@mui/material';
 
 import { db } from '../App';
@@ -20,7 +20,8 @@ function Comments() {
     const [reload, setreload] = useState("1")
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem("question"))
-        setComments(data.comments)
+        let comments=_.unique(data.comments)
+        setComments(comments)
     }, [reload])
     return (
         <>
@@ -77,7 +78,7 @@ function Newcomment({ setreload,setComments }) {
                 }
             ]
         }
-        setComments([
+        let comments=_.unique([
             ...(questiondata.comments ? questiondata.comments : []),
             {
                 name: userdata.name,
@@ -85,6 +86,7 @@ function Newcomment({ setreload,setComments }) {
                 comment
             }
         ])
+        setComments(comments)
         localStorage.setItem("question", JSON.stringify(questiondata))
         const questionref = doc(db, "questions", `${questiondata.id}`)
         setreload("1")

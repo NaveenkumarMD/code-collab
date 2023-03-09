@@ -18,6 +18,8 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../App";
 import { toastGenerator } from "../Functions/toast";
 import Questioncontext from "../Context/Questioncontext";
+import { toast } from "react-toastify";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 const socket = io.connect("http://localhost:5005/");
 
 const defaultEditorConfig = {
@@ -35,6 +37,8 @@ if __name__ == "__main__":
     main()
 `;
 function Editorcomponent() {
+  const [interviewMode,setInterviewMode]=useState(false)
+  const handle = useFullScreenHandle()
   const monaco = useMonaco();
   const {question,setQuestion} =useContext(Questioncontext)
   const [config, setEditorconfig] = useState(defaultEditorConfig);
@@ -87,6 +91,24 @@ function Editorcomponent() {
     stream.getAudioTracks()[0].enabled = EnableAudio;
   };
 
+  //interview mode
+  useEffect(()=>{
+    if(interviewMode){
+      // eslint-disable-next-line no-restricted-globals
+      if(confirm("Enter interview mode")){
+        if (!document.fullscreenElement) {
+          var htmlelement = document.documentElement
+          htmlelement.requestFullscreen()
+      }
+      }
+      if (!document.fullscreenElement) {
+        htmlelement = document.documentElement
+        htmlelement.requestFullscreen()
+    }
+    }
+  },[interviewMode,handle])
+
+
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: Enablevideo, audio: EnableAudio })
@@ -135,6 +157,13 @@ function Editorcomponent() {
     }
   }, [caller, idToCall, code]);
 
+  const setAsinterview=()=>{
+    socket.send({
+      text:"interview",
+      to:caller
+    })
+  }
+
   const callUser = (id) => {
     const peer = new Peer({
       initiator: true,
@@ -159,9 +188,16 @@ function Editorcomponent() {
     });
 
     socket.on("message", (data) => {
+      if(data==="interview"){
+        toast.success("Interview mode has been enabled")
+        alert("Interview started")
+        setInterviewMode(true)
+
+      }
       setCode(data);
       editorRef.current.value = data;
     });
+
 
     socket.on("disconnect", () => {
       peer.destroy();
@@ -220,6 +256,7 @@ function Editorcomponent() {
   };
 
   let socketprops = {
+    setAsinterview,
     myVideo,
     callAccepted,
     callEnded,
@@ -427,6 +464,7 @@ function Editorcomponent() {
   },[])
 
   return (
+    <FullScreen handle={handle}>
     <div ref={maincontainerref} className="main-container">
       <Navbar {...Navbarprops} />
 
@@ -466,6 +504,7 @@ function Editorcomponent() {
         </div>
       </div>
     </div>
+    </FullScreen>
   );
 }
 
