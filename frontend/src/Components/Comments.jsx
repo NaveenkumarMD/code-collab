@@ -20,13 +20,13 @@ function Comments() {
     const [reload, setreload] = useState("1")
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem("question"))
-        let comments=_.unique(data.comments)
+        let comments = data ? _.unique(data.comments) : []
         setComments(comments)
     }, [reload])
     return (
         <>
             <Box sx={{ p: "60px" }}>
-                <Newcomment setreload={setreload}  setComments={setComments}/>
+                <Newcomment setreload={setreload} setComments={setComments} />
             </Box>
             <Typography color="primary" variant='h5' >Other's comments</Typography>
             <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
@@ -62,7 +62,7 @@ function Comments() {
 }
 export default Comments
 
-function Newcomment({ setreload,setComments }) {
+function Newcomment({ setreload, setComments }) {
     const [comment, setComment] = useState("")
     const handleclick = async () => {
         let userdata = JSON.parse(localStorage.getItem("userdata"))
@@ -78,7 +78,7 @@ function Newcomment({ setreload,setComments }) {
                 }
             ]
         }
-        let comments=_.unique([
+        let comments = _.unique([
             ...(questiondata.comments ? questiondata.comments : []),
             {
                 name: userdata.name,

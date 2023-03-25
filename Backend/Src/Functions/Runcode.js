@@ -1,10 +1,29 @@
 const compiler = require("compilex")
+const os = require("os")
+const process = require("process")
+const { getForStatements, getBigONotation } = require("./CalculateComplexity")
 var compileroptions = {
     stats: true
 }
 compiler.init(compileroptions)
 
+function parseInput(code) {
+    let newlineSplit = code.split("\n")
+    let forStatements = getForStatements(newlineSplit);
+    return getBigONotation(forStatements);
+}
+
 function runcode(code, language, input) {
+    const formatMemoryUsage = (data) => `${Math.round(data / 1024 * 100) / 100} KB`;
+
+    var memoryBefore = process.memoryUsage()
+    memoryBefore = memoryBefore.heapUsed
+    var timeComplexity = parseInput(code)
+    var memoryUsage = process.memoryUsage()
+    memoryUsage = memoryUsage.heapUsed - memoryBefore
+    console.log(timeComplexity, formatMemoryUsage(memoryUsage))
+
+
     return new Promise(function (resolve, reject) {
         switch (language) {
             case "python":
@@ -59,7 +78,7 @@ function runcode(code, language, input) {
 
                 }
                 break;
-                
+
             case "cpp" || "c":
                 var envData = { OS: "windows" }
                 if (input) {
@@ -86,7 +105,7 @@ function runcode(code, language, input) {
 
                 }
                 break;
-                
+
 
             default:
                 break;

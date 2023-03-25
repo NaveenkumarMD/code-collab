@@ -70,6 +70,7 @@ function Leftcontainer({
     //     }
     //     console.log(question)
     // }, [questionId]);
+    console.log("my video is ",myVideo.current)
     const handletabclick = (e) => {
         const tabSelected = e.target.getAttribute("name")
         cleanStyles()

@@ -6,8 +6,10 @@ import Questions from '../Assets/Questions/questions.json'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AllquestionsFilter from '../Components/AllquestionsFilter'
+import Createjobe from './Createjobe'
 function Allquestions() {
     const [questions, setQuestions] = useState(Questions)
+    const [open, setOpen] = React.useState(false);
     const [search, setSearch] = useState('')
     const [sort, setSort] = useState(false)
     const [sortType, setSortType] = useState('asc')
@@ -27,14 +29,29 @@ function Allquestions() {
         search,
         setSearch
     }
-    useEffect(()=>{
-        const userdata=JSON.parse(localStorage.getItem("userdata"))
-        if(!userdata){
+    useEffect(() => {
+        const userdata = JSON.parse(localStorage.getItem("userdata"))
+        if (!userdata) {
             navigate("/login")
         }
-    },[])
+    }, [])
     return (
         <div className='aqcontainer'>
+            <Createjobe {...{ open, setOpen }} />
+            <div style={{
+                position: "absolute",
+                top: "20px",
+                right: "20px",
+                display: "flex",
+                flexDirection: "row"
+            }}>
+                <div className="btn-run" onClick={() => setOpen(true)}>
+                    Create job
+                </div>
+                <div className="btn-run" onClick={() => { }}>
+                    Apply for jobs
+                </div>
+            </div>
             <div className='qcontainer'>
                 <div>
                     <div className='aqheader'>
@@ -54,7 +71,7 @@ function Allquestions() {
                             </thead>
                             <tbody>
 
-                                {   
+                                {
                                     questions.questions.map((question, index) => {
                                         if (question.title.toLowerCase().includes(search.toLowerCase()) && (question.tags.includes(topic) || topic === 'All') && (question.difficulty === difficulty || difficulty === 'All') && (question.type === type || type === 'All')) {
                                             a += 1;
@@ -69,7 +86,7 @@ function Allquestions() {
                                                 </tr>
                                             )
                                         }
-                                    })                     
+                                    })
 
                                 }
                             </tbody>

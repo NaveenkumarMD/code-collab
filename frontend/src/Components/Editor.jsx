@@ -114,7 +114,11 @@ function Editorcomponent() {
       .getUserMedia({ video: Enablevideo, audio: EnableAudio })
       .then((stream) => {
         setStream(stream);
-        myVideo.current.srcObject = stream;
+        if(stream){
+          console.log("refis",myVideo.current)
+        // myVideo.current.srcObject = stream;
+        }
+
       });
 
     socket.on("me", (id) => {
@@ -128,25 +132,25 @@ function Editorcomponent() {
       setName(data.name);
       setCallerSignal(data.signal);
     });
-    if (rightcontainerref.current)
-      editorRef.current = rightcontainerref.current.querySelector(".editor");
+    // if (rightcontainerref.current)
+    //   editorRef.current = rightcontainerref.current.querySelector(".editor");
 
-    let details = JSON.parse(localStorage.getItem("userdata"));
-    setUserDetails(details);
-    if (details) {
-      const docRef = doc(db, "users", details.email);
-      getDoc(docRef).then((docSnap) => {
-        if (docSnap.exists()) {
-          let userdata = docSnap.data();
-          if (userdata.problems) {
-            const val = userdata.problems.find(
-              (prob) => prob.questionId === questionId
-            );
-            setCode(val.code);
-          }
-        }
-      });
-    }
+    // let details = JSON.parse(localStorage.getItem("userdata"));
+    // setUserDetails(details);
+    // if (details) {
+    //   const docRef = doc(db, "users", details.email);
+    //   getDoc(docRef).then((docSnap) => {
+    //     if (docSnap.exists()) {
+    //       let userdata = docSnap.data();
+    //       if (userdata.problems) {
+    //         const val = userdata.problems.find(
+    //           (prob) => prob.questionId === questionId
+    //         );
+    //         setCode(val.code);
+    //       }
+    //     }
+    //   });
+    // }
   }, []);
 
   useEffect(() => {
@@ -327,6 +331,23 @@ function Editorcomponent() {
     settestcaseCount(currquestion?.sample_input.length)
   },[questionId,questions])
   const runCode = () => {
+
+    // fetch("http//:localhost:8000/check",{
+    //   method:"POST",
+    //   headers:{
+    //     "content-type":"application/json",
+    //     "no-proxy":true
+    //   },
+    //   "no-proxy":true,
+      
+    //   body:JSON.stringify({
+    //     code:code,
+    //     lang:language
+    //   })
+    // }).then(res=>{
+    //   console.log("reposne is",res)
+    // })
+    // return
     const dataToRunCode = {
       language,
       code,
