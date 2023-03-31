@@ -1,0 +1,30 @@
+.container {
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 600px;
+}
+
+.card-box {
+    margin: 1em;
+    width: 500px;
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cntnt {
+    margin-left: 2em;
+}
+
+.salary {
+    margin-left: .7em;
+}
+
+.btn {
+    margin: .2em;
+}

@@ -7,6 +7,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useFormik } from 'formik';
+import { addDoc, collection } from "firebase/firestore";
+import { db } from '../App'
+import { toast, ToastContainer } from "react-toastify"
+
+
+
 
 export default function Createjobe({ open, setOpen }) {
 
@@ -27,18 +33,26 @@ export default function Createjobe({ open, setOpen }) {
             expected_salary: ""
         },
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            toast.info("Please wait! Creating job")
+            if (values.interview_name = "" || values.company_name == "" || values.position == "" || values.expected_salary == "") {
+                return toast.warning("Enter all the fields")
+            }
+            addDoc(collection(db, "jobs"), values).then(() => {
+                toast.success("Successfully created job")
+            })
+
+
         }
     })
     return (
-        <div style={{width:"900px"}}>
-            <Dialog  fullWidth maxWidth="sm" open={open} onClose={handleClose}>
+        <div style={{ width: "900px" }}>
+            <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
                 <DialogTitle>Create Job</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Enter the details of the job from the top to bottom
                     </DialogContentText>
-                    <div style={{ margin: "20px 0px"}}>
+                    <div style={{ margin: "20px 0px" }}>
                         <form onSubmit={formik.handleSubmit}>
                             <TextField
                                 autoFocus
@@ -96,7 +110,7 @@ export default function Createjobe({ open, setOpen }) {
                                 value={formik.values.position}
                                 onChange={formik.handleChange}
                             /><br /><br />
-                              <TextField
+                            <TextField
                                 autoFocus
                                 margin="dense"
                                 id="expected_salary"

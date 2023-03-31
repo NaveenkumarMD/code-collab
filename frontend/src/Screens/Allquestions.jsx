@@ -7,9 +7,11 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AllquestionsFilter from '../Components/AllquestionsFilter'
 import Createjobe from './Createjobe'
+import ViewJobs from '../Components/ViewJobs'
 function Allquestions() {
     const [questions, setQuestions] = useState(Questions)
     const [open, setOpen] = React.useState(false);
+    const [open1, setOpen1] = React.useState(false);
     const [search, setSearch] = useState('')
     const [sort, setSort] = useState(false)
     const [sortType, setSortType] = useState('asc')
@@ -38,6 +40,7 @@ function Allquestions() {
     return (
         <div className='aqcontainer'>
             <Createjobe {...{ open, setOpen }} />
+            <ViewJobs open={open1}  setOpen={setOpen1} />
             <div style={{
                 position: "absolute",
                 top: "20px",
@@ -48,7 +51,7 @@ function Allquestions() {
                 <div className="btn-run" onClick={() => setOpen(true)}>
                     Create job
                 </div>
-                <div className="btn-run" onClick={() => { }}>
+                <div className="btn-run" onClick={() => {setOpen1(true) }}>
                     Apply for jobs
                 </div>
             </div>

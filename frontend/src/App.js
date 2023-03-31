@@ -18,6 +18,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { green, purple } from '@mui/material/colors';
 import Questioncontext from "./Context/Questioncontext";
 import addx from "./Functions/x";
+import ViewJobs from "./Components/ViewJobs";
 
 const theme = createTheme({
   palette: {
@@ -72,6 +73,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Allquestions/>} />
+          <Route path="/viewjobs" element={<ViewJobs/>} />
         </Routes>
         <ToastContainer autoClose={4000} />
       </UserContext.Provider>

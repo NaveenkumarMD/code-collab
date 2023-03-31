@@ -192,6 +192,7 @@ function Editorcomponent() {
     });
 
     socket.on("message", (data) => {
+      console.log("data us ",data)
       if(data==="interview"){
         toast.success("Interview mode has been enabled")
         alert("Interview started")

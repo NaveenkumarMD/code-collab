@@ -52,6 +52,7 @@ io.on("connection", (socket) => {
   socket.on("message", (data) => {
     console.log("mesage is ",data.text);
     if(data.text==="interview"){
+      console.log("emitted")
       io.to(data.to).emit("message", "interview");
     }
     io.to(data.to).emit("message", data.text);
