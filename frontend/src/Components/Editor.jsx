@@ -81,7 +81,26 @@ function Editorcomponent() {
   const [Enablevideo, setEnableVideo] = useState(true);
 
   const [userDetails, setUserDetails] = useState();
+  const [coords, setCoords] = useState({x: 0, y: 0});
 
+  useEffect(() => {
+    const handleWindowMouseMove = event => {
+      setCoords({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      console.log(event.clientY)
+    };
+    window.addEventListener('mousemove', handleWindowMouseMove);
+
+    return () => {
+      window.removeEventListener(
+        'mousemove',
+        handleWindowMouseMove,
+      );
+    };
+  }, []);
   const toggleVideo = () => {
     setEnableVideo(!Enablevideo);
     stream.getVideoTracks()[0].enabled = Enablevideo;
@@ -373,6 +392,30 @@ function Editorcomponent() {
       .catch((err) => {
         console.log(err);
       });
+
+      fetch("http://127.0.0.1:8000/check",{
+        method:"POST",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body:JSON.stringify({
+          code,
+          lang:language,
+          user:"Naveen",
+          name:"MyFirstCode"
+        })
+      }).then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'report.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      })
+      .catch(error => console.error('Error:', error));
+    
   };
 
   const saveCode = () => {

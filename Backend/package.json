@@ -15,6 +15,7 @@
     "general-search-engine": "^1.4.1",
     "google-search-results-nodejs": "^2.1.0",
     "mongoose": "^6.6.1",
+    "node-fetch": "^2.0.0",
     "nodemon": "^2.0.20",
     "reconnecting-websocket": "^4.4.0",
     "sharedb": "^3.1.0",

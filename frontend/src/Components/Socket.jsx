@@ -20,7 +20,25 @@ function Socket() {
   const connectionRef = useRef();
   const [EnableAudio, setEnabelAudio] = useState(true);
   const [Enablevideo, setEnableVideo] = useState(false);
- 
+  const [coords, setCoords] = useState({x: 0, y: 0});
+
+  useEffect(() => {
+    const handleWindowMouseMove = event => {
+      setCoords({
+        x: event.clientX,
+        y: event.clientY,
+      });
+      console.log(coords)
+    };
+    window.addEventListener('mousemove', handleWindowMouseMove);
+
+    return () => {
+      window.removeEventListener(
+        'mousemove',
+        handleWindowMouseMove,
+      );
+    };
+  }, []);
   const toggleVideo = () => {
     setEnableVideo(!Enablevideo);
     stream.getVideoTracks()[0].enabled = Enablevideo;

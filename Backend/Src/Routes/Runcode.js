@@ -1,6 +1,7 @@
 const express = require("express")
 const runcode = require("../Functions/Runcode")
 const router = express.Router()
+const fetch = require('node-fetch');
 
 router.post("/runcode", (req, res) => {
     const {
@@ -16,6 +17,22 @@ router.post("/runcode", (req, res) => {
         })
     }
     console.log("runcode function is called..")
+
+    let resData={
+        code,
+        language,
+        name:"MyFirstCode",
+        user:"naveen"
+    }
+    fetch("http://127.0.0.1:8000/check",{
+        method:"POST",
+        body:JSON.stringify(resData)
+    }).then(resp=>{
+        res.sendFile(resp)
+    }).catch(err=>{
+        console.log(err)
+    })
+
     runcode(code, language, input).then(result => {
         res.json(result)
     }).catch(function (err) {
@@ -23,6 +40,8 @@ router.post("/runcode", (req, res) => {
             "err": err
         })
     })
+
+    res.end()
 
 })
 
